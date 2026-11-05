@@ -51,21 +51,6 @@ export default function PartnerMarquee({ logos, rows = 3, labels }: Props) {
         ))}
       </div>
 
-      <div className="container-x mt-6 flex justify-center">
-        <button
-          type="button"
-          onClick={() => setPaused((p) => !p)}
-          aria-pressed={paused}
-          className="inline-flex min-h-11 items-center gap-2 rounded-xs border border-line-strong bg-white px-4 text-sm font-semibold text-navy transition-colors hover:border-navy"
-        >
-          {paused ? (
-            <svg viewBox="0 0 24 24" className="size-4" aria-hidden fill="currentColor"><path d="M7 5v14l12-7z" /></svg>
-          ) : (
-            <svg viewBox="0 0 24 24" className="size-4" aria-hidden fill="currentColor"><rect x="6" y="5" width="4" height="14" /><rect x="14" y="5" width="4" height="14" /></svg>
-          )}
-          {paused ? labels.play : labels.pause}
-        </button>
-      </div>
     </div>
   )
 }
