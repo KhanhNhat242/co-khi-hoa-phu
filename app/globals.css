@@ -515,6 +515,125 @@
   .marquee-row > [aria-hidden='true'] { display: none; }
 }
 
+/* 3 mảng dịch vụ (Dịch vụ) — ≥1280px. Ngoài @layer để thắng class Tailwind của bản mobile.
+   Ngoại lệ R1 + mục 6 REQUIREMENTS: mặc định ảnh phủ kín thẻ, chữ trắng đè lên; mở (hover / focus bàn phím)
+   thì ảnh chạy sang ô 272×204 bên phải, hiện mô tả. */
+@media (min-width: 80rem) {
+  .svc-list { display: flex; gap: 24px; min-height: 332px; container-type: inline-size; }
+  /* bản sao đo chiều cao chữ lúc mở: rộng = thẻ mở (2.8/4.8 hàng) − padding 2×2rem − ô ảnh 296px − khe 1.5rem */
+  .svc-card__measure {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc((100cqw - 48px) * 2.8 / 4.8 - 4rem - 296px - 1.5rem);
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .svc-card {
+    --svc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    transition: flex-grow 900ms var(--svc-ease), background-color 900ms var(--svc-ease), box-shadow 900ms var(--svc-ease);
+  }
+  .svc-card__media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 0;
+    overflow: hidden;
+    transition: left 900ms var(--svc-ease), top 900ms var(--svc-ease), width 900ms var(--svc-ease),
+      height 900ms var(--svc-ease), border-radius 900ms var(--svc-ease);
+  }
+  .svc-card__img { object-fit: cover; }
+  .svc-card__shade {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(11 42 74 / 0.82) 0%, rgb(11 42 74 / 0.25) 45%, rgb(11 42 74 / 0.8) 100%);
+    transition: opacity 600ms var(--svc-ease);
+  }
+  .svc-card__body { position: relative; z-index: 1; height: 100%; padding: 2rem; }
+  .svc-card__slot { display: block; flex-shrink: 0; width: 0; transition: width 900ms var(--svc-ease); }
+  .svc-card__title { color: #fff; transition: color 600ms var(--svc-ease); }
+  .svc-card__desc {
+    max-height: 0;
+    margin-top: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 900ms var(--svc-ease), margin-top 900ms var(--svc-ease), opacity 400ms var(--svc-ease);
+  }
+  .svc-card__btn { color: #fff; transition: color 600ms var(--svc-ease); }
+
+  .svc-card:is(:hover, :has(:focus-visible)) {
+    flex-grow: 2.8;
+    background-color: #fff;
+    box-shadow: 0 24px 48px -28px rgb(11 42 74 / 0.45);
+    --tw-ring-color: var(--color-line);
+  }
+  .svc-card:is(:hover, :has(:focus-visible)) .svc-card__media {
+    top: 2rem;
+    left: calc(100% - 2rem - 296px);
+    width: 296px;
+    height: var(--svc-open-h, 204px);
+    border-radius: 12px;
+  }
+  .svc-card:is(:hover, :has(:focus-visible)) .svc-card__shade { opacity: 0; }
+  .svc-card:is(:hover, :has(:focus-visible)) .svc-card__slot { width: calc(296px + 1.5rem); }
+  .svc-card:is(:hover, :has(:focus-visible)) .svc-card__title,
+  .svc-card:is(:hover, :has(:focus-visible)) .svc-card__btn { color: var(--color-navy); }
+  .svc-card:is(:hover, :has(:focus-visible)) .svc-card__desc {
+    max-height: 20rem;
+    margin-top: 0.75rem;
+    opacity: 1;
+    transition-delay: 0ms, 0ms, 300ms;
+  }
+  .svc-card:is(:hover, :has(:focus-visible)) .svc-card__cta { margin-top: 0; }
+}
+
+/* Quy trình 4 bước (Dịch vụ) — hover bước nào thì cung tiến trình chạy tới chấm của bước đó.
+   --p0…--p5: dashoffset (pathLength = 1) đặt inline trong ProcessArc.tsx. */
+.process-arc__progress {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.process-arc__dot { transition: fill 200ms ease-out, stroke 200ms ease-out; }
+.process-arc:has([data-step="0"]:hover) .process-arc__progress { stroke-dashoffset: var(--p0); }
+.process-arc:has([data-step="1"]:hover) .process-arc__progress { stroke-dashoffset: var(--p1); }
+.process-arc:has([data-step="2"]:hover) .process-arc__progress { stroke-dashoffset: var(--p2); }
+.process-arc:has([data-step="3"]:hover) .process-arc__progress { stroke-dashoffset: var(--p3); }
+.process-arc:has([data-step="4"]:hover) .process-arc__progress { stroke-dashoffset: var(--p4); }
+.process-arc:has([data-step="5"]:hover) .process-arc__progress { stroke-dashoffset: var(--p5); }
+.process-arc:has([data-step="0"]:hover) [data-dot="0"],
+.process-arc:has([data-step="1"]:hover) [data-dot="0"],
+.process-arc:has([data-step="1"]:hover) [data-dot="1"],
+.process-arc:has([data-step="2"]:hover) [data-dot="0"],
+.process-arc:has([data-step="2"]:hover) [data-dot="1"],
+.process-arc:has([data-step="2"]:hover) [data-dot="2"],
+.process-arc:has([data-step="3"]:hover) [data-dot="0"],
+.process-arc:has([data-step="3"]:hover) [data-dot="1"],
+.process-arc:has([data-step="3"]:hover) [data-dot="2"],
+.process-arc:has([data-step="3"]:hover) [data-dot="3"],
+.process-arc:has([data-step="4"]:hover) [data-dot="0"],
+.process-arc:has([data-step="4"]:hover) [data-dot="1"],
+.process-arc:has([data-step="4"]:hover) [data-dot="2"],
+.process-arc:has([data-step="4"]:hover) [data-dot="3"],
+.process-arc:has([data-step="4"]:hover) [data-dot="4"],
+.process-arc:has([data-step="5"]:hover) [data-dot="0"],
+.process-arc:has([data-step="5"]:hover) [data-dot="1"],
+.process-arc:has([data-step="5"]:hover) [data-dot="2"],
+.process-arc:has([data-step="5"]:hover) [data-dot="3"],
+.process-arc:has([data-step="5"]:hover) [data-dot="4"],
+.process-arc:has([data-step="5"]:hover) [data-dot="5"] {
+  fill: var(--color-steel);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

@@ -9,6 +9,7 @@ import PageHero from '@/components/layout/PageHero'
 import PageQuickJump from '@/components/layout/PageQuickJump'
 import SectionHead from '@/components/ui/SectionHead'
 import VideoGallery from '@/components/video/VideoGallery'
+import ProjectCarousel from '@/components/projects/ProjectCarousel'
 import { videos } from '@/data/videos'
 
 export async function generateMetadata({ params }: PageProps<'/[lang]/du-an'>): Promise<Metadata> {
@@ -36,37 +37,14 @@ export default async function ProjectsPage({ params }: PageProps<'/[lang]/du-an'
         crumbs={[{ href: `/${lang}`, label: common.home }, { label: dict.nav.projects }]}
       />
 
-      {/* Ảnh thực tế — bento 3 cột: 1 ô lớn 2×2 + các ô 1×1 */}
-      <section className="section">
-        <div className="container-x">
-          {/* TODO(khach): tên đối tác & khu vực từng hạng mục — một ghi chú chung thay vì badge lặp lại */}
-          <SectionHead title={P.gridTitle} action={<p className="todo-badge">{P.pendingNote}</p>} />
-          <div className="mt-12 grid grid-cols-1 grid-flow-dense gap-4 md:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-6">
-            {projects.map((p) => {
-              const big = p.size === 'lg'
-              return (
-                <figure
-                  key={p.id}
-                  className={`flex flex-col rounded-sm border border-line bg-white ${big ? 'md:col-span-2 lg:row-span-2' : ''}`}
-                >
-                  {/* Ảnh contain trên nền xám — không đè chữ (R1) */}
-                  <div className={`relative bg-surface ${big ? 'aspect-[440/280] lg:aspect-auto lg:min-h-[320px] lg:flex-1' : 'aspect-[4/3]'}`}>
-                    <Image
-                      src={p.image}
-                      alt=""
-                      fill
-                      sizes={big ? '(min-width:1024px) 800px, 100vw' : '(min-width:1024px) 400px, 100vw'}
-                      className="object-contain"
-                    />
-                  </div>
-                  <figcaption className="border-t border-line p-4 text-[0.9375rem] leading-6 font-semibold text-navy lg:px-6">
-                    {t(p.title, lang)}
-                  </figcaption>
-                </figure>
-              )
-            })}
-          </div>
-        </div>
+      {/* Ảnh thực tế — tiêu đề giữa + carousel 3D cong chạy theo cuộn (ngoại lệ mục 6 + R1 REQUIREMENTS) */}
+      {/* TODO(khach): tên đối tác & khu vực từng hạng mục */}
+      <section>
+        <ProjectCarousel
+          title={P.gridTitle}
+          navLabel={P.galleryNav}
+          items={projects.map((p) => ({ id: p.id, title: t(p.title, lang), image: p.image }))}
+        />
       </section>
 
       {/* Video giới thiệu máy móc — phát ngay trên trang (YouTube nhúng) */}
@@ -83,7 +61,7 @@ export default async function ProjectsPage({ params }: PageProps<'/[lang]/du-an'
       </section>
 
       {/* Đối tác — Social Proof: lưới logo */}
-      <section className="section border-t border-line">
+      {/* <section className="section border-t border-line">
         <div className="container-x">
           <SectionHead title={P.partnersTitle} lead={P.partnersLead} />
           <ul
@@ -97,7 +75,7 @@ export default async function ProjectsPage({ params }: PageProps<'/[lang]/du-an'
             ))}
           </ul>
         </div>
-      </section>
+      </section> */}
 
       <PageQuickJump page="projects" lang={lang} dict={dict} />
     </>

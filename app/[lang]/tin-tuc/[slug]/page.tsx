@@ -11,6 +11,10 @@ import PageQuickJump from '@/components/layout/PageQuickJump'
 import QuoteButton from '@/components/quote/QuoteButton'
 import { IconArrowLeft, IconArrowRight } from '@/components/ui/Icons'
 
+// Trang đọc `slug` ngoài <Suspense> (R7: không dùng skeleton rỗng). Mọi slug đã prerender qua generateStaticParams
+// nên cho phép điều hướng chờ trang tĩnh thay vì tách App Shell → tắt cảnh báo "URL data outside of Suspense".
+export const instant = false
+
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }))
 }

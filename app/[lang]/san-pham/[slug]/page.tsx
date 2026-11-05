@@ -14,6 +14,10 @@ import SectionHead from '@/components/ui/SectionHead'
 import PageQuickJump from '@/components/layout/PageQuickJump'
 import { IconArrowRight, IconFile, IconPhone, IconPlay } from '@/components/ui/Icons'
 
+// Trang đọc `slug` ngoài <Suspense> (R7: không dùng skeleton rỗng). Mọi slug đã prerender qua generateStaticParams
+// nên cho phép điều hướng chờ trang tĩnh thay vì tách App Shell → tắt cảnh báo "URL data outside of Suspense".
+export const instant = false
+
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }))
 }
