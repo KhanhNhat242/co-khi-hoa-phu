@@ -1,0 +1,301 @@
+{
+  "meta": {
+    "siteTitle": "Hoa Phu Machinery – Woodworking machines, lines, conveyors",
+    "siteDescription": "Hoa Phu Mechanical Co., Ltd. supplies new and used woodworking machines, production lines, industrial conveyors, mechanical fabrication and air compressors."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "products": "Products",
+    "services": "Services",
+    "projects": "Projects",
+    "news": "News",
+    "contact": "Contact",
+    "searchPlaceholder": "Search machine, brand, model…",
+    "search": "Search",
+    "menu": "Open menu",
+    "close": "Close",
+    "switchLang": "Chuyển sang tiếng Việt",
+    "tagline": "Woodworking machinery",
+    "openSearch": "Open search",
+    "skip": "Skip to main content"
+  },
+  "common": {
+    "requestQuote": "Request a quote",
+    "viewProducts": "View products",
+    "viewSpecs": "Specs & PDF",
+    "viewAll": "View all",
+    "readMore": "Read article",
+    "new": "New",
+    "used": "Used",
+    "all": "All",
+    "brand": "Brand",
+    "model": "Model",
+    "category": "Category",
+    "condition": "Condition",
+    "pendingClient": "Pending client confirmation",
+    "home": "Home",
+    "callNow": "Call now"
+  },
+  "hero": {
+    "eyebrow": "HOA PHU MECHANICAL CO., LTD.",
+    "titleA": "Complete",
+    "titleHighlight": "turnkey",
+    "titleB": "machinery and production lines for woodworking – from consulting and fabrication to installation.",
+    "lead": "Hoa Phu supplies new and used woodworking machines, production lines, industrial conveyors, mechanical fabrication and air compressors for furniture workshops and wood processing plants.",
+    "slideLabel": "Featured machine",
+    "prev": "Previous image",
+    "next": "Next image",
+    "scroll": "Explore",
+    "pause": "Pause slideshow",
+    "play": "Play slideshow",
+    "factsLabel": "Core capabilities",
+    "facts": [
+      {
+        "k": "Products",
+        "v": "New & used machines"
+      },
+      {
+        "k": "Services",
+        "v": "Consult – build – install"
+      },
+      {
+        "k": "Head office",
+        "v": "Thu Duc City, HCMC"
+      }
+    ],
+    "hotline": "Hotline / Zalo"
+  },
+  "home": {
+    "catsEyebrow": "Products & services",
+    "catsTitle": "Five core product and service groups at Hoa Phu",
+    "catsLead": "From single woodworking machines to complete automated lines, conveyors and machined parts, pick a group to browse the catalogue and send a quote request in seconds.",
+    "catsCount": "sub-categories",
+    "partnersEyebrow": "Partners",
+    "partnersTitle": "Businesses that partner with Hoa Phu",
+    "partnersAll": "View all partners",
+    "catsLabel": "Categories",
+    "viewCategory": "View category",
+    "more": "more"
+  },
+  "about": {
+    "title": "About Hoa Phu Mechanical Co., Ltd.",
+    "lead": "A supplier of machinery, production lines and mechanical services for the wood industry, supporting workshops and factories from consulting to installation.",
+    "storyEyebrow": "Our story",
+    "storyTitle": "Our story and commercial presence in the industry",
+    "storyText": "Hoa Phu Mechanical Co., Ltd. is based in Thu Duc City, Ho Chi Minh City, focusing on new and used woodworking machines, production lines, industrial conveyors and mechanical fabrication services. We serve furniture workshops and wood processing plants in Ho Chi Minh City and the southern provinces.",
+    "storyCaption": "KUBOKE – Hoa Phu booth at a woodworking exhibition",
+    "brandNote": "KUBOKE – the clamp carrier and saw brand Hoa Phu presents at trade shows.",
+    "scaleEyebrow": "Capability",
+    "scaleTitle": "Our workshop scale and key strengths",
+    "scaleLead": "Exact figures are being compiled by Hoa Phu and will be published once confirmed, so the information you receive is always accurate.",
+    "scaleCaption": "Workshop with an industrial dust extraction system",
+    "usp": [
+      {
+        "title": "Years of experience",
+        "text": "Years of operation in woodworking machinery are pending client confirmation."
+      },
+      {
+        "title": "In-house line design & build",
+        "text": "The scope of custom line design and fabrication is pending client confirmation."
+      },
+      {
+        "title": "Warranty & maintenance",
+        "text": "Warranty and maintenance terms for new and used machines are being updated."
+      },
+      {
+        "title": "On-site installation",
+        "text": "Service areas for on-site installation and commissioning are pending confirmation."
+      }
+    ],
+    "storyLabel": "About",
+    "scaleLabel": "Capability"
+  },
+  "products": {
+    "title": "Catalogue of machinery and industrial equipment",
+    "lead": "Filter by machine group, new or used condition and brand to find the right equipment, then send a quote request in just a few seconds.",
+    "filters": "Filters",
+    "categories": "Categories",
+    "allCategories": "All products",
+    "condition": "Condition",
+    "brands": "Brands",
+    "search": "Search by machine name",
+    "reset": "Clear filters",
+    "results": "products",
+    "empty": "No matching products yet. Try removing some filters or send us a request and we will source the machine for you.",
+    "showFilters": "Show filters",
+    "hideFilters": "Hide filters",
+    "selected": "Selected",
+    "clearSearch": "Clear search"
+  },
+  "product": {
+    "specsTitle": "Technical specifications",
+    "specDetail": "Detailed specifications",
+    "specDetailValue": "Contact us for the full specification sheet",
+    "catalogue": "Download PDF catalogue",
+    "cataloguePending": "PDF catalogue coming soon",
+    "video": "Operation video",
+    "videoPending": "The operation video for this machine is being updated.",
+    "related": "More in this category",
+    "highlights": "Highlights",
+    "help": "Need help choosing a machine? Call our hotline or message us on Zalo."
+  },
+  "services": {
+    "title": "Fabrication, installation and machining services",
+    "lead": "Hoa Phu supports wood workshops from site survey and solution consulting to fabrication, supply and installation of production lines, conveyors and custom mechanical parts.",
+    "cardsEyebrow": "Expertise",
+    "cardsTitle": "Three specialised technical service areas",
+    "cards": [
+      {
+        "title": "Automated line consulting & installation",
+        "text": "We configure and install finger-jointing lines, UV coating and curing lines for flooring and automatic panel coating lines that match each factory’s floor space, output and products."
+      },
+      {
+        "title": "Custom industrial conveyor design",
+        "text": "We design roller, PVC, rubber, chain, stainless mesh and heat-resistant Kevlar conveyors sized to your stock, load and temperature at every stage of the production line."
+      },
+      {
+        "title": "Precision mechanical fabrication",
+        "text": "We machine parts and woodworking accessories such as aluminium chair frames, gearboxes and hydraulic power units from drawings or samples, for repairs and new builds."
+      }
+    ],
+    "processEyebrow": "Process",
+    "processTitle": "A clear four-step working process",
+    "steps": [
+      {
+        "title": "Receive your request",
+        "text": "We listen to your needs, products and floor layout by phone, Zalo or form."
+      },
+      {
+        "title": "Survey & consulting",
+        "text": "We survey the site and propose the machine or line setup for your target output."
+      },
+      {
+        "title": "Quote & build/supply",
+        "text": "We send a detailed quote, agree the schedule, then fabricate or supply the equipment."
+      },
+      {
+        "title": "Install & hand over",
+        "text": "We install, test run, train your team on safe operation and hand over the equipment."
+      }
+    ],
+    "ctaTitle": "Have a drawing or a special requirement?",
+    "ctaText": "Send the details to Hoa Phu and we will get back to you with advice and a quote.",
+    "cardsLabel": "Expertise",
+    "processLabel": "Process"
+  },
+  "projects": {
+    "title": "Featured projects and real-world photos",
+    "lead": "Real photos from workshops and Hoa Phu exhibition booths. Partner names and installation areas for each item will be added once our clients give their approval.",
+    "gridEyebrow": "Real photos",
+    "gridTitle": "Machinery and production lines we have delivered",
+    "area": "Area",
+    "areaPending": "pending confirmation",
+    "partner": "Partner",
+    "partnersEyebrow": "Partners",
+    "partnersTitle": "Businesses that partner with Hoa Phu",
+    "partnersLead": "Partner logos provided by Hoa Phu. Project details will be added once each partner gives approval.",
+    "gridLabel": "Photos",
+    "partnersLabel": "Partners",
+    "pendingNote": "Partner names and installation areas for each item are pending client confirmation."
+  },
+  "news": {
+    "title": "Technical news and machine operation guides",
+    "lead": "Practical tips on running and maintaining woodworking machines, conveyors and air compressors to keep your plant stable, reduce downtime and save costs.",
+    "back": "All articles",
+    "more": "More articles",
+    "guide": "Technical guide"
+  },
+  "contact": {
+    "title": "Contact Hoa Phu and get a quote",
+    "lead": "Tell us which machine or line you need and the Hoa Phu team will call back with advice and a quote. For urgent requests, call the hotline or message us on Zalo.",
+    "infoTitle": "Contact information",
+    "address": "Address",
+    "person": "Contact person",
+    "hotline": "Hotline / Zalo",
+    "chatZalo": "Chat on Zalo",
+    "messenger": "Messenger",
+    "openMap": "Open Google Maps",
+    "mapTitle": "Map of Hoa Phu Mechanical Co., Ltd.",
+    "formTitle": "Send a quote request",
+    "formLead": "Fields marked * are required.",
+    "infoLabel": "Contact"
+  },
+  "form": {
+    "name": "Full name",
+    "phone": "Phone / Zalo",
+    "email": "Email",
+    "company": "Company",
+    "product": "Product of interest",
+    "quantity": "Quantity",
+    "province": "Province / City",
+    "message": "Request details",
+    "messagePlaceholder": "Describe your needs, stock sizes, target output…",
+    "submit": "Send quote request",
+    "submitting": "Sending…",
+    "successTitle": "We have received your request",
+    "successText": "Thank you. Hoa Phu will call you back on the phone number you provided as soon as possible.",
+    "again": "Send another request",
+    "errRequired": "Please fill in this field.",
+    "errPhone": "Please enter a valid phone number.",
+    "errEmail": "Please enter a valid email address.",
+    "errGeneral": "Please check the highlighted fields."
+  },
+  "quote": {
+    "title": "Request a quote",
+    "lead": "Fill in a few details and Hoa Phu will call you back with advice as soon as possible.",
+    "selected": "Machine of interest"
+  },
+  "floating": {
+    "call": "Call 0913 813 412",
+    "callShort": "Call now",
+    "zalo": "Chat Zalo",
+    "messenger": "Messenger"
+  },
+  "quickJump": {
+    "label": "Next",
+    "also": "Or visit",
+    "items": {
+      "home": {
+        "title": "Explore the machinery catalogue",
+        "text": "Filter by machine group, condition and brand to find the right equipment."
+      },
+      "about": {
+        "title": "Explore the machinery catalogue",
+        "text": "Browse woodworking machines, production lines, conveyors and industrial equipment."
+      },
+      "products": {
+        "title": "Fabrication and machining services",
+        "text": "See how Hoa Phu consults, builds and installs to your requirements."
+      },
+      "services": {
+        "title": "See projects and real photos",
+        "text": "Machines and production lines at workshops and exhibitions."
+      },
+      "projects": {
+        "title": "Read the latest technical news",
+        "text": "Operation and maintenance guides for wood workshops."
+      },
+      "news": {
+        "title": "Contact us for a quote",
+        "text": "Send a request and Hoa Phu will call you back as soon as possible."
+      },
+      "contact": {
+        "title": "Back to the machinery catalogue",
+        "text": "Pick a specific machine for a faster, more accurate quote."
+      }
+    }
+  },
+  "footer": {
+    "about": "New and used woodworking machines, production lines, industrial conveyors, mechanical fabrication and air compressors.",
+    "pages": "Pages",
+    "categories": "Machine categories",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  },
+  "notFound": {
+    "title": "We could not find that page",
+    "text": "The page may have moved. Go back to the homepage or browse the product catalogue.",
+    "back": "Back to homepage"
+  }
+}
