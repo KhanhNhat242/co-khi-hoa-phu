@@ -185,6 +185,14 @@ Sản phẩm
 | Focus | Viền 3px `--color-accent` + offset 2px, không bao giờ ẩn |
 | Vùng bấm | ≥ 44×44px |
 
+**Ngoại lệ đã duyệt (khách yêu cầu 2026-11-05) — chỉ ở hero trang chủ:**
+- Nền gradient loang (`.hero-mesh`) và làm mờ mép ảnh (`.hero-fade`).
+- Section 5 nhóm sản phẩm (trang chủ): nền navy tối, animation gắn với cuộn (không áp giới hạn 200ms), tự tắt khi `prefers-reduced-motion` hoặc màn hình < 1024px.
+- Carousel logo đối tác (trang chủ): marquee + thẻ bo góc/bóng mềm theo ảnh mẫu khách gửi. Dừng khi hover/focus, có nút tạm dừng, tắt hẳn khi `prefers-reduced-motion` (hiện lưới tĩnh).
+- **Ngoại lệ R1 (khách duyệt 2026-11-05):** section Câu chuyện (trang Giới thiệu) dùng 3 ô ảnh dọc `object-cover` + zoom khi hover (SHODA NC-261, ORMA, Sheng Shing). Watermark trên ảnh là của Hoà Phú, không phải tem Thành Nhân. Không áp dụng cho nơi khác.
+- Section Quy mô & điểm mạnh (trang Giới thiệu): chồng thẻ chạy theo cuộn, thẻ bo 20px + bóng mềm theo mẫu khách gửi; ảnh trong thẻ vẫn contain, không phủ chữ (R1).
+- Header trong suốt hoà vào hero, chỉ còn logo + 7 mục menu dồn trái + nút chuyển ngôn ngữ VI/EN ở góc phải; cuộn qua hero thì chuyển về header navy đầy đủ (animation 200ms). Các trang khác luôn dùng header navy.
+
 **Style bổ trợ theo khu vực:**
 - *Feature-Rich Showcase* — 5 nhóm sản phẩm (trang chủ) và trang Dịch vụ: thẻ hover nhấc 4px, **không** tác động lên ảnh (an toàn tem).
 - *Data-Dense Dashboard* — **chỉ** bảng thông số kỹ thuật: hàng cao 36px, khoảng cách gọn. Không áp dụng cho phần còn lại.
@@ -290,6 +298,7 @@ Mọi thông tin đánh dấu [cần xin khách] / [cần xác nhận] → dùng
 | Q8 | Email nhận báo giá / kênh nhận lead | Chờ khách |
 | Q9 | Nội dung giới thiệu, giờ làm việc, mã số thuế | Chờ khách |
 | Q10 | Nội dung tiếng Anh do ai duyệt | Chờ sale |
+| Q11 | ~~Video phản chiếu cho ReflectiveCard~~ | Không còn cần (đã bỏ ReflectiveCard) |
 
 ---
 
@@ -298,6 +307,15 @@ Mọi thông tin đánh dấu [cần xin khách] / [cần xác nhận] → dùng
 | Ngày | Người | Thay đổi |
 |---|---|---|
 | 2026-11-05 | Dev | Khởi tạo tài liệu từ Phiếu Dev 42 |
+| 2026-11-05 | Dev | Section Câu chuyện (Giới thiệu) làm lại theo ảnh mẫu khách gửi: tiêu đề giữa + đoạn trích + 3 ô ảnh dọc hover zoom (thay ReflectiveCard). Khách duyệt ngoại lệ R1 cho phép cắt ảnh dọc ở section này. |
+| 2026-11-05 | Dev | Ảnh gian hàng (trang Giới thiệu) đặt trong ReflectiveCard (React Bits, WebGL): `components/ui/ReflectiveCard/` — sửa `[HoaPhu]`: bỏ icon @hugeicons (khách chọn không cài thư viện), chuyển cập nhật ref vào `useLayoutEffect` (rule react-hooks/refs). Chưa có video phản chiếu (Q11). |
+| 2026-11-05 | Dev | Tiêu đề hero đổi sang **FoldText** (React Bits + **GSAP 3.15**, khách đồng ý cài thư viện): `components/ui/FoldText/` (giữ nguyên bản gốc + `index.ts` khai báo kiểu). Trang Giới thiệu: Quy mô & điểm mạnh thành chồng thẻ theo cuộn (`components/about/StrengthDeck.tsx`). |
+| 2026-11-05 | Dev | Section đối tác trang chủ: lưới tĩnh → carousel 3 hàng tự cuộn xen kẽ chiều (`components/home/PartnerMarquee.tsx`), dùng cả 33 logo. |
+| 2026-11-05 | Dev | Chồng thẻ 5 nhóm: thẻ 442px = ảnh gốc 440×330 hiển thị 1:1 (không phóng to, toạ độ pixel nguyên, ảnh gốc không nén lại) cho nét hơn; lưới 3/6/3 để thẻ nằm giữa. Header rút gọn ở hero thêm nút VI/EN. |
+| 2026-11-05 | Dev | Section 5 nhóm sản phẩm làm lại theo ảnh mẫu khách gửi: chồng thẻ 3D sticky chạy theo cuộn (`components/home/CategoryScroller.tsx`). |
+| 2026-11-05 | Dev | Hero dùng `hero-banner2.png` + nền gradient loang; header trong suốt khi ở vùng hero (xem mục 6 – ngoại lệ). Lưu ý: `hero-banner2.png` **chưa được tách nền thật** (alpha 100% đặc, nền trắng) → dùng `mix-blend-multiply` trên nền sáng; nếu muốn hero tông tối cần file PNG tách nền thật. |
+| 2026-11-05 | Dev | Trang Dự án thêm section video giới thiệu máy (`data/videos.ts`, 8 link YouTube khách gửi, tên đối chiếu tiêu đề gốc). Nhúng `youtube-nocookie.com`, iframe chỉ tải khi bấm; thumbnail `i.ytimg.com` (đã thêm `images.remotePatterns`). Mã model không còn bị ngắt dòng ở dấu gạch nối (`noOrphan`). |
+| 2026-11-05 | Dev | Hero trang chủ làm lại theo ảnh mẫu khách gửi: bỏ slider máy, dùng ảnh `public/images/hero-banner.png` (không có tem, được đảo màu bằng CSS). Tiêu đề rút gọn từ thông điệp gợi ý ("Giải pháp máy móc trọn gói cho ngành gỗ."), phần "từ tư vấn, chế tạo đến lắp đặt" chuyển xuống lead. Dải thông số chỉ dùng dữ liệu thật (5 nhóm SP, máy mới & cũ, hotline). |
 | 2026-11-05 | Dev | Đổi phong cách toàn site sang Swiss Modernism 2.0 + Flat + Trust & Authority + Accessible & Ethical (mục 6). Bỏ hoạ tiết trang trí, shadow, gradient, animation dài; font đổi sang Inter; logo đối tác tĩnh (không marquee); header thêm nút báo giá. |
 | 2026-11-05 | Dev | Áp dụng bản mô tả giao diện "Multi-page Architecture" (xem mục 13). Quyết định: **slug tiếng Việt dùng chung cho cả vi/en** (`/en/san-pham`…); tìm kiếm dùng `/[lang]/san-pham?q=` (không có trang `/tim-kiem` riêng); thêm danh mục con "Máy ép nóng / nguội" vào Máy chế biến gỗ vì kho ảnh có nhiều máy ép. |
 
@@ -313,11 +331,11 @@ Mọi thông tin đánh dấu [cần xin khách] / [cần xác nhận] → dùng
 
 | Trang | Khối |
 |---|---|
-| Trang chủ `/vi` | Split hero 50/50 vừa 1 màn hình (trái navy + CTA, phải slider DTL-20D / GOODTEK / SHODA) · 5 nhóm sản phẩm (bố cục 3+2) · logo đối tác |
-| Giới thiệu | Câu chuyện + ảnh gian hàng KUBOKE · Quy mô xưởng + 4 thẻ USP (`Chờ khách xác nhận`) |
+| Trang chủ `/vi` | Hero vừa 1 màn hình: nền **gradient loang** tông sáng phủ toàn bộ (kể cả dưới header và dưới ảnh), chữ trái (kicker, tiêu đề, lead, nút báo giá + link sản phẩm, dải 3 thông số), ảnh `hero-banner2.png` bên phải **cao full màn hình, không cắt ảnh** (đúng tỉ lệ gốc, bám mép phải; header và cột chữ được phép đè lên ảnh), hoà nền bằng `mix-blend-multiply`, chỉ mờ góc trên-trái · 5 nhóm sản phẩm: **chồng thẻ 3D chạy theo cuộn** (sticky; trái: số thứ tự + tên + danh mục con; phải: mô tả + nút + chỉ báo vị trí; mobile/giảm chuyển động: danh sách tĩnh) · **carousel logo đối tác 3 hàng** tự cuộn ngang xen kẽ chiều (hàng 1 & 3: phải→trái, hàng 2: trái→phải), thẻ trắng bo góc + bóng mềm, có nút tạm dừng |
+| Giới thiệu | Câu chuyện: tiêu đề giữa, trái đoạn trích + ghi chú KUBOKE + nút báo giá, phải **3 ô ảnh dọc** (ô giữa cao hơn; hover/focus: ô to ra + ảnh zoom, ô khác mờ; mỗi ô link tới trang máy) · Quy mô xưởng & điểm mạnh: **chồng thẻ chạy theo cuộn** (sticky; trái: tiêu đề + danh sách 4 điểm mạnh bấm được; phải: thẻ navy ảnh contain + nội dung + nhãn `Chờ khách xác nhận` + nút báo giá; mobile/giảm chuyển động: lưới tĩnh) |
 | Sản phẩm | Sidebar lọc 25% (danh mục 2 cấp, Tất cả/Mới/Đã qua sử dụng, thương hiệu) + lưới 3 cột |
 | Dịch vụ | 3 mảng dịch vụ · stepper 4 bước · CTA |
-| Dự án / Tin tức | Bento ảnh thực tế (khu vực: chờ xác nhận) + logo đối tác · thẻ bài viết `line-clamp-2` |
+| Dự án / Tin tức | Bento ảnh thực tế (khu vực: chờ xác nhận) · **Video giới thiệu máy móc** (8 video YouTube, lưới 4×2, phát trong hộp thoại ngay trên trang) · logo đối tác · thẻ bài viết `line-clamp-2` |
 | Liên hệ | 40% thông tin + bản đồ · 60% form 8 trường |
 
 **Sai khác so với bản mô tả (cố ý):** bản mô tả ghi "máy tiện Sheng Shing", nhưng ảnh Sheng Shing trong kho là **máy chà nhám thùng** → dùng đúng theo ảnh. Bộ lọc thương hiệu chỉ hiện hãng có sản phẩm (FERM chưa có ảnh → chưa hiện).

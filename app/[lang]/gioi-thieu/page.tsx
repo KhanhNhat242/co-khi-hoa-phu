@@ -1,13 +1,15 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { hasLocale } from '@/lib/i18n'
+import { hasLocale, t } from '@/lib/i18n'
 import { getDictionary } from '@/lib/dictionaries'
 import PageHero from '@/components/layout/PageHero'
 import PageQuickJump from '@/components/layout/PageQuickJump'
 import QuoteButton from '@/components/quote/QuoteButton'
-import SectionHead from '@/components/ui/SectionHead'
 import { IconArrowRight } from '@/components/ui/Icons'
+import StrengthDeck from '@/components/about/StrengthDeck'
+import Link from 'next/link'
+import { findProduct } from '@/data/products'
 
 export async function generateMetadata({ params }: PageProps<'/[lang]/gioi-thieu'>): Promise<Metadata> {
   const { lang } = await params
@@ -19,6 +21,18 @@ export async function generateMetadata({ params }: PageProps<'/[lang]/gioi-thieu
     alternates: { canonical: `/${lang}/gioi-thieu`, languages: { vi: '/vi/gioi-thieu', en: '/en/gioi-thieu' } },
   }
 }
+
+// Ảnh minh hoạ cho 4 điểm mạnh (theo thứ tự about.usp) — đều có watermark → hiển thị contain (R1)
+const strengthImages = [
+  '/images/SanPham/91869_440x280.jpg', // Kinh nghiệm: gian hàng triển lãm
+  '/images/SanPham/795651582630_440x330.jpg', // Tự thiết kế & chế tạo dây chuyền: dây chuyền ghép finger
+  '/images/SanPham/024414336162_440x330.jpg', // Bảo hành – bảo trì: xưởng & hệ thống hút bụi
+  '/images/SanPham/212230662445_440x330.jpg', // Lắp đặt tận nơi: cụm máy ghép tại xưởng
+]
+
+// 3 ảnh minh hoạ cho section Câu chuyện (khác với ảnh của StrengthDeck) — slug sản phẩm để lấy tên + link
+// Ngoại lệ R1 đã duyệt (khách, 2026-11-05): ô ảnh dọc object-cover + zoom khi hover; watermark là của Hoà Phú.
+const storyProducts = ['may-cnc-shoda-nc-261', 'may-ep-nong-orma', 'may-cha-nham-thung-sheng-shing']
 
 export default async function AboutPage({ params }: PageProps<'/[lang]/gioi-thieu'>) {
   const { lang } = await params
@@ -34,60 +48,80 @@ export default async function AboutPage({ params }: PageProps<'/[lang]/gioi-thie
         crumbs={[{ href: `/${lang}`, label: common.home }, { label: dict.nav.about }]}
       />
 
-      {/* Câu chuyện & hiện diện thương mại */}
+      {/* Câu chuyện & hiện diện thương mại — tiêu đề giữa; trái: đoạn trích + nút; phải: 3 ô ảnh dọc, hover phóng to */}
       <section className="section">
         <div className="container-x">
-          <SectionHead title={about.storyTitle} />
-          <div className="grid-12 mt-12 gap-y-10 lg:mt-16">
-            <figure className="col-span-4 md:col-span-12 lg:col-span-7">
-              {/* Ảnh gian hàng — giữ nguyên tỉ lệ gốc 440×280, không đè chữ (R1) */}
-              <div className="relative aspect-[440/280] rounded-sm border border-line bg-surface">
-                <Image src="/images/SanPham/91869_440x280.jpg" alt={about.storyCaption} fill sizes="(min-width:1024px) 700px, 100vw" className="object-contain" />
-              </div>
-              <figcaption className="mt-3 text-sm text-muted">{about.storyCaption}</figcaption>
-            </figure>
+          <header className="text-center">
+            <h2 className="t-h2">{about.storyTitle}</h2>
+            <span aria-hidden className="mx-auto mt-4 block h-0.5 w-16 bg-accent" />
+          </header>
 
-            <div className="col-span-4 md:col-span-12 lg:col-span-5">
-              <p className="text-[1.0625rem] leading-7 text-ink">{about.storyText}</p>
-              <dl className="mt-8 border-t border-line">
-                <div className="grid grid-cols-[120px_1fr] gap-4 border-b border-line py-4">
-                  <dt className="font-semibold text-navy">KUBOKE</dt>
-                  <dd className="text-[0.9375rem] leading-6 text-muted">{about.brandNote}</dd>
-                </div>
-              </dl>
+          <div className="mt-12 grid grid-cols-1 items-center gap-12 lg:mt-16 lg:grid-cols-2 lg:gap-16">
+            <div className="text-center">
+              <blockquote className="mx-auto max-w-[560px] text-[1.0625rem] leading-8 font-medium text-ink lg:text-lg lg:leading-8">
+                “{about.storyText}”
+              </blockquote>
+              <p className="mx-auto mt-6 max-w-[480px] text-[0.9375rem] leading-6 text-muted">
+                {about.brandNote}
+              </p>
               <QuoteButton className="btn btn-accent mt-8">
                 {common.requestQuote} <IconArrowRight className="size-5" />
               </QuoteButton>
             </div>
+
+            {/* 3 ô ảnh dọc (ô giữa cao hơn). Hover/focus: ô to ra + ảnh zoom, các ô còn lại mờ nhẹ.
+                Ngoại lệ R1 đã duyệt cho section này (watermark Hoà Phú, không phải tem Thành Nhân). */}
+            <ul className="group/story flex items-center justify-center gap-3 sm:gap-4">
+              {storyProducts.map((slug, i) => {
+                const p = findProduct(slug)
+                if (!p) return null
+                const name = t(p.name, lang)
+                return (
+                  <li
+                    key={slug}
+                    className={`w-[30%] max-w-[200px] transition-opacity duration-500 group-has-[a:hover]/story:opacity-70 has-[a:hover]:!opacity-100 ${
+                      i === 1 ? 'aspect-[9/16]' : 'aspect-[9/13]'
+                    }`}
+                  >
+                    <Link
+                      href={`/${lang}/san-pham/${p.slug}`}
+                      aria-label={name}
+                      className="group/tile relative block size-full overflow-hidden rounded-[16px] bg-surface shadow-[0_16px_32px_-18px_rgb(11_42_74/0.5)] transition-transform duration-500 ease-out hover:z-10 hover:scale-[1.08] focus-visible:z-10 focus-visible:scale-[1.08]"
+                    >
+                      <Image
+                        src={p.images[0].src}
+                        alt={name}
+                        fill
+                        sizes="(min-width:1024px) 200px, 30vw"
+                        className="object-cover transition-transform duration-700 ease-out group-hover/tile:scale-[1.15] group-focus-visible/tile:scale-[1.15]"
+                      />
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* Quy mô xưởng & điểm mạnh */}
-      <section className="section border-t border-line bg-surface">
+      {/* Quy mô xưởng & điểm mạnh — chồng thẻ chạy theo cuộn (bản tĩnh cho mobile / giảm chuyển động) */}
+      <section className="border-t border-line bg-surface py-14 lg:py-0">
         <div className="container-x">
-          <SectionHead title={about.scaleTitle} lead={about.scaleLead} />
-          <div className="grid-12 mt-12 gap-y-10 lg:mt-16">
-            <figure className="col-span-4 md:col-span-12 lg:col-span-5">
-              <div className="machine-frame rounded-sm border border-line bg-white">
-                <Image src="/images/SanPham/024414336162_440x330.jpg" alt={about.scaleCaption} fill sizes="(min-width:1024px) 480px, 100vw" />
-              </div>
-              <figcaption className="mt-3 text-sm text-muted">{about.scaleCaption}</figcaption>
-            </figure>
-
-            {/* TODO(khach): số liệu USP thật — R2 không bịa */}
-            <dl className="col-span-4 border-t-2 border-navy md:col-span-12 lg:col-span-7">
-              {about.usp.map((u) => (
-                <div key={u.title} className="grid grid-cols-1 gap-2 border-b border-line py-6 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] sm:gap-6">
-                  <dt className="text-lg leading-7 font-bold text-navy">{u.title}</dt>
-                  <dd>
-                    <p className="text-[0.9375rem] leading-6 text-muted">{u.text}</p>
-                    <span className="todo-badge mt-3">{common.pendingClient}</span>
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+          <StrengthDeck
+            header={
+              <>
+                <h2 className="t-h2">{about.scaleTitle}</h2>
+                <p className="t-lead mt-4">{about.scaleLead}</p>
+              </>
+            }
+            items={about.usp.map((u, i) => ({
+              title: u.title,
+              text: u.text,
+              image: strengthImages[i % strengthImages.length],
+              imageAlt: u.title,
+            }))}
+            labels={{ requestQuote: common.requestQuote, pending: common.pendingClient, listLabel: about.scaleTitle }}
+          />
         </div>
       </section>
 

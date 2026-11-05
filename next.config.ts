@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
     agentUpgrade: "security",
   },
   cacheComponents: true,
+  images: {
+    // Thumbnail video YouTube (trang Dự án)
+    remotePatterns: [new URL('https://i.ytimg.com/vi/**')],
+  },
   partialPrefetching: true,
   turbopack: {
     rules: {

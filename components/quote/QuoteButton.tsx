@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { useQuote } from './QuoteProvider'
+import { plainText } from '@/lib/i18n'
 
 type Props = {
   product?: string
@@ -17,7 +18,7 @@ export default function QuoteButton({ product, image, className = 'btn btn-accen
     <button
       type="button"
       className={className}
-      onClick={() => open(product ? { name: product.replace(/\u00A0/g, ' '), image } : null)}
+      onClick={() => open(product ? { name: plainText(product), image } : null)}
     >
       {children}
     </button>

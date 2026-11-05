@@ -66,6 +66,7 @@ Khách nhắc 3 lần. Với mọi ảnh/video có tem/watermark/logo "Thành Nh
   - **Không** shadow, gradient, hoạ tiết trang trí, bo góc lớn: nút/ô nhập `rounded-xs` (2px), thẻ tối đa `rounded-sm` (4px). Phân tách bằng viền 1px.
   - Animation **≤ 200ms**, chỉ màu/opacity/nhấc 4px; không reveal khi cuộn, không marquee, không autoplay khi `prefers-reduced-motion`; carousel phải có nút tạm dừng.
   - Accessible: skip link, focus 3px, vùng bấm ≥ 44px, chữ ≥ 14px, viền ô nhập dùng `line-strong` (≥3:1). Chữ cam trên nền sáng dùng `accent-ink`.
+  - Ngoại lệ duy nhất cho gradient/mask/header trong suốt: hero trang chủ (REQUIREMENTS mục 6). Không mở rộng sang chỗ khác. Ảnh dùng `mix-blend-*` thì khung bọc KHÔNG được có transform/opacity/mask/filter (tách nhóm hoà trộn).
   - Style bổ trợ chỉ dùng đúng khu vực đã ghi ở mục 6 (bảng dày chỉ cho bảng thông số; quy cách conversion chỉ cho form báo giá).
 - Màu chỉ dùng qua **design tokens** khai báo ở `app/globals.css` (`@theme`) theo bảng mục 6 REQUIREMENTS: navy/xanh công nghiệp chủ đạo, cam/vàng **chỉ để nhấn** (CTA, badge), nền trắng/xám nhạt. Không dùng mã màu rời trong className.
 - Theme antd (`ConfigProvider`) dùng cùng tokens với Tailwind.
@@ -76,7 +77,8 @@ Khách nhắc 3 lần. Với mọi ảnh/video có tem/watermark/logo "Thành Nh
 
 ## R7. Kỹ thuật
 
-- Next.js 16.4 App Router + React 19 + TypeScript strict + Tailwind v4 + antd v6. Không thêm thư viện mới khi chưa hỏi.
+- Next.js 16.4 App Router + React 19 + TypeScript strict + Tailwind v4 + antd v6 + GSAP (chỉ cho hiệu ứng React Bits đã duyệt). Không thêm thư viện mới khi chưa hỏi.
+- Component React Bits (biến thể JS-CSS) đặt ở `components/ui/<Tên>/`, giữ nguyên mã gốc; sửa thì đánh dấu `[HoaPhu]`; khai báo kiểu qua `index.ts` nếu TS suy sai.
 - Mặc định **Server Component**; `'use client'` chỉ ở component lá cần tương tác (form, bộ lọc, gallery, nút nổi, chuyển ngôn ngữ). Trang (`page.tsx`) không để `'use client'`.
 - Tailwind cho layout/style; antd cho component tương tác phức tạp (Form, Select, Drawer, Tabs, Modal). Thứ tự layer CSS giữ nguyên `theme, base, antd, components, utilities`.
 - Ảnh luôn qua `next/image` có `alt` (2 ngôn ngữ), `sizes` hợp lý. Video nhúng lazy, không autoplay có tiếng.

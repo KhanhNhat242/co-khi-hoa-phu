@@ -64,7 +64,25 @@
         "v": "Thu Duc City, HCMC"
       }
     ],
-    "hotline": "Hotline / Zalo"
+    "hotline": "Hotline / Zalo",
+    "kicker": "Hoa Phu Machinery · Thu Duc City",
+    "title": "Turnkey machinery for the wood industry.",
+    "lead2": "From consulting and fabrication to installation: new and used woodworking machines, production lines, industrial conveyors and custom mechanical fabrication.",
+    "stats": [
+      {
+        "v": "5",
+        "k": "Product groups"
+      },
+      {
+        "v": "New & used",
+        "k": "Machines"
+      },
+      {
+        "v": "0913 813 412",
+        "k": "Hotline / Zalo"
+      }
+    ],
+    "imageAlt": "Mechanical parts: gears and bearings on technical drawings"
   },
   "home": {
     "catsEyebrow": "Products & services",
@@ -76,7 +94,9 @@
     "partnersAll": "View all partners",
     "catsLabel": "Categories",
     "viewCategory": "View category",
-    "more": "more"
+    "more": "more",
+    "partnersPause": "Pause",
+    "partnersPlay": "Play"
   },
   "about": {
     "title": "About Hoa Phu Mechanical Co., Ltd.",
@@ -93,19 +113,19 @@
     "usp": [
       {
         "title": "Years of experience",
-        "text": "Years of operation in woodworking machinery are pending client confirmation."
+        "text": "11 years in the woodworking machinery industry."
       },
       {
         "title": "In-house line design & build",
-        "text": "The scope of custom line design and fabrication is pending client confirmation."
+        "text": ""
       },
       {
         "title": "Warranty & maintenance",
-        "text": "Warranty and maintenance terms for new and used machines are being updated."
+        "text": "Warranty and maintenance policies for new and used machines."
       },
       {
         "title": "On-site installation",
-        "text": "Service areas for on-site installation and commissioning are pending confirmation."
+        "text": "On-site installation and test runs at your workshop."
       }
     ],
     "storyLabel": "About",
@@ -197,7 +217,13 @@
     "partnersLead": "Partner logos provided by Hoa Phu. Project details will be added once each partner gives approval.",
     "gridLabel": "Photos",
     "partnersLabel": "Partners",
-    "pendingNote": "Partner names and installation areas for each item are pending client confirmation."
+    "pendingNote": "Partner names and installation areas for each item are pending client confirmation.",
+    "videosTitle": "Machine introduction videos",
+    "videosLead": "Watch the machines running right on this page. Select a machine to play its video, and send a quote request if you need advice.",
+    "videoPlay": "Play video",
+    "videoClose": "Close video",
+    "videoOpenYoutube": "Open on YouTube",
+    "videoDialog": "Video"
   },
   "news": {
     "title": "Technical news and machine operation guides",

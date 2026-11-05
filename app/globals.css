@@ -363,6 +363,64 @@
     box-shadow: 0 0 0 3px var(--color-danger);
   }
 
+  /* Hero trang chủ: gradient loang (mesh) — ngoại lệ đã duyệt cho Flat, CHỈ dùng ở hero.
+     Tông sáng để ảnh linh kiện nền trắng hoà vào bằng mix-blend-multiply. */
+  .hero-mesh {
+    background-color: #EDF2F8;
+    background-image:
+      radial-gradient(55% 65% at 80% 35%, #CFDDEF 0%, rgb(207 221 239 / 0) 70%),
+      radial-gradient(40% 50% at 100% 100%, #BFD2EA 0%, rgb(191 210 234 / 0) 70%),
+      radial-gradient(45% 55% at 8% 92%, rgb(242 140 27 / 0.16) 0%, rgb(242 140 27 / 0) 70%),
+      radial-gradient(50% 60% at 22% 18%, #FFFFFF 0%, rgb(255 255 255 / 0) 70%),
+      radial-gradient(35% 45% at 55% 0%, rgb(30 78 140 / 0.12) 0%, rgb(30 78 140 / 0) 70%);
+  }
+
+  /* Chữ nằm đè lên ảnh hero: quầng sáng mềm theo màu nền (ngoại lệ hero, không dùng nơi khác) */
+  .hero-legible {
+    text-shadow:
+      0 0 1px #FFFFFF,
+      0 0 3px #FFFFFF,
+      0 0 6px #FFFFFF,
+      0 0 12px rgb(255 255 255 / 0.95),
+      0 0 24px rgb(237 242 248 / 0.95);
+  }
+
+  /* Ảnh hero cao full màn hình, không cắt: desktop chỉ mờ góc trên-trái.
+     Mobile (ảnh là khối riêng dưới nội dung): mờ 4 mép. */
+  .hero-fade-full {
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 6%, #000 90%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 6%, #000 90%, transparent 100%);
+    mask-composite: intersect;
+  }
+
+  /* Desktop: giữ nguyên mép trái như ảnh gốc (khách yêu cầu), chỉ mờ nhẹ mép dưới */
+  @media (min-width: 1024px) {
+    /* Chỉ mờ góc trên-trái (chỗ menu + tiêu đề), góc dưới-trái và các mép khác giữ nguyên */
+    .hero-fade-full {
+      -webkit-mask-image: radial-gradient(60% 65% at 0% 0%, transparent 0%, rgb(0 0 0 / 0.35) 55%, #000 100%);
+      -webkit-mask-composite: source-over;
+      mask-image: radial-gradient(60% 65% at 0% 0%, transparent 0%, rgb(0 0 0 / 0.35) 55%, #000 100%);
+      mask-composite: add;
+    }
+  }
+
+  /* Làm mờ 4 mép ảnh hero để không lộ khung chữ nhật (đặt trên chính <img> cùng mix-blend) */
+  .hero-fade {
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, #000 10%, #000 94%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 6%, #000 88%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent 0, #000 10%, #000 94%, transparent 100%),
+      linear-gradient(to bottom, transparent 0, #000 6%, #000 88%, transparent 100%);
+    mask-composite: intersect;
+  }
+
   .todo-badge {
     display: inline-flex;
     align-items: center;
@@ -419,6 +477,42 @@
 
 .spin {
   animation: spin 0.8s linear infinite;
+}
+
+/* Carousel logo đối tác (trang chủ) — ngoại lệ đã duyệt: marquee */
+@keyframes marquee-rtl {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-ltr {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+.marquee-row {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.marquee-rtl { animation-name: marquee-rtl; }
+.marquee-ltr { animation-name: marquee-ltr; }
+
+.partner-marquee:hover .marquee-row,
+.partner-marquee:focus-within .marquee-row,
+.partner-marquee.is-paused .marquee-row {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-row {
+    animation: none !important;
+    flex-wrap: wrap;
+    width: auto;
+    justify-content: center;
+  }
+
+  .marquee-row > [aria-hidden='true'] { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -3,15 +3,16 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { hasLocale, t } from '@/lib/i18n'
 import { getDictionary } from '@/lib/dictionaries'
-import { siteConfig } from '@/lib/site-config'
 import { categories } from '@/data/categories'
-import { heroSlides, products } from '@/data/products'
+import { products } from '@/data/products'
 import { partnerLogos } from '@/data/partners'
-import HeroSlider from '@/components/home/HeroSlider'
 import QuoteButton from '@/components/quote/QuoteButton'
 import SectionHead from '@/components/ui/SectionHead'
+import CategoryScroller from '@/components/home/CategoryScroller'
+import PartnerMarquee from '@/components/home/PartnerMarquee'
+import FoldText from '@/components/ui/FoldText'
 import PageQuickJump from '@/components/layout/PageQuickJump'
-import { IconArrowRight, IconPhone } from '@/components/ui/Icons'
+import { IconArrowRight } from '@/components/ui/Icons'
 
 export default async function HomePage({ params }: PageProps<'/[lang]'>) {
   const { lang } = await params
@@ -19,154 +20,131 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
   const dict = getDictionary(lang)
   const { hero, home, common } = dict
 
-  const slides = heroSlides.map((p) => ({
-    src: p.images[0].src,
-    name: t(p.name, lang),
-    href: `/${lang}/san-pham/${p.slug}`,
-    condition: p.condition,
-    brand: p.brand,
-  }))
-
   return (
     <>
-      {/* ── HERO: chia đôi 50/50, vừa 1 màn hình desktop ── */}
-      <section className="grid grid-cols-1 lg:min-h-[calc(100svh-var(--header-h))] lg:grid-cols-2">
-        <div className="flex flex-col justify-center bg-navy px-4 py-14 text-white md:px-6 lg:py-16 lg:pr-16 lg:pl-[max(32px,calc((100vw-1280px)/2+32px))]">
-          <div className="max-w-[600px]">
-            <p className="text-[0.9375rem] font-semibold tracking-wide text-white/85">{hero.eyebrow}</p>
-            <h1 className="t-display mt-6">
-              {hero.titleA} {hero.titleHighlight} {hero.titleB}
+      {/* ── HERO: nền gradient loang phủ toàn bộ (kể cả dưới header & dưới ảnh), ảnh hoà nền bằng multiply ──
+          Ngoại lệ đã duyệt cho Flat (REQUIREMENTS mục 6): gradient chỉ dùng ở hero trang chủ. */}
+      <section
+        id="hero"
+        className="hero-mesh relative isolate -mt-(--header-h) overflow-hidden pt-(--header-h) text-navy lg:flex lg:min-h-svh lg:items-center"
+      >
+        <div className="container-x relative z-10">
+          <div className="py-14 lg:w-[54%] lg:py-20 lg:pr-8 xl:w-[46%]">
+            {/* Tiêu đề hiệu ứng FoldText (React Bits + GSAP): chữ gập như giấy rồi mở ra, rê chuột gần thì gập nhẹ.
+                FoldText tự có bản chữ ẩn (sr-only) cho SEO/trình đọc màn hình; tự giảm chuyển động khi prefers-reduced-motion. */}
+            <h1 className="mt-6 [text-wrap:balance]">
+              <FoldText
+                text={hero.title}
+                foldStyle="paper"
+                splitBy="char"
+                hinge="top"
+                trigger="scroll"
+                foldAngle={92}
+                duration={0.65}
+                stagger={0.045}
+                staggerFrom="start"
+                ease="power3.out"
+                loopDelay={1.4}
+                hoverRefold
+                refoldRadius={140}
+                refoldAngle={45}
+                perspective={700}
+                creaseShading={0.55}
+                fontSize="clamp(2.5rem, 1.2rem + 3.6vw, 4rem)"
+                fontWeight={800}
+                style={{ lineHeight: 1.08, letterSpacing: '-0.03em' }}
+              />
             </h1>
-            <p className="mt-6 max-w-[560px] text-base leading-7 text-white/85 lg:text-lg">{hero.lead}</p>
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+            {/* Chữ đè lên ảnh banner: navy đậm + quầng sáng mờ quanh chữ để tách khỏi chi tiết kim loại phía sau */}
+            <p className="hero-legible mt-6 max-w-[520px] text-base leading-7 font-medium text-navy lg:text-lg lg:leading-8">{hero.lead2}</p>
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
               <QuoteButton className="btn btn-accent">
                 {common.requestQuote}
                 <IconArrowRight className="size-5" />
               </QuoteButton>
-              <Link href={`/${lang}/san-pham`} className="btn btn-outline-light">
+              <Link
+                href={`/${lang}/san-pham`}
+                className="group inline-flex min-h-12 items-center gap-2 font-semibold text-navy underline-offset-8 hover:underline"
+              >
                 {common.viewProducts}
+                <IconArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
-
-            <dl className="mt-12 border-t border-white/30">
-              {hero.facts.map((f) => (
-                <div key={f.k} className="grid grid-cols-[112px_minmax(0,1fr)] gap-4 border-b border-white/30 py-3">
-                  <dt className="text-[0.9375rem] text-white/80">{f.k}</dt>
-                  <dd className="font-semibold">{f.v}</dd>
-                </div>
-              ))}
-            </dl>
-            <a href={siteConfig.phoneHref} className="group mt-6 inline-flex items-center gap-4">
-              <span className="grid size-12 place-items-center rounded-xs border border-white/40 transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-navy">
-                <IconPhone className="size-5" />
-              </span>
-              <span>
-                <span className="block text-sm text-white/80">{hero.hotline}</span>
-                <span className="block text-xl font-bold tabular-nums">{siteConfig.phoneDisplay}</span>
-              </span>
-            </a>
           </div>
         </div>
 
-        <div className="flex items-center justify-center border-b border-line bg-surface px-4 py-12 md:px-6 lg:py-16 lg:pr-[max(32px,calc((100vw-1280px)/2+32px))] lg:pl-16">
-          <HeroSlider slides={slides} labels={{ ...hero, new: common.new, used: common.used }} />
+        {/* Ảnh linh kiện — KHÔNG cắt ảnh: desktop cao full màn hình, rộng theo đúng tỉ lệ 2400×1792, bám mép phải;
+            phần chữ bên trái (z-10) được phép đè lên ảnh. Chỉ mờ góc trên-trái (.hero-fade-full).
+            Nền trắng của ảnh hoà vào gradient (mix-blend-multiply) — mobile: khối dưới nội dung */}
+        <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-[2400/1792] lg:h-full lg:max-w-full">
+          {/* Không dùng transform/opacity/mask trên khung bọc: sẽ tách nhóm hoà trộn và làm mất multiply */}
+          <div className="relative aspect-[2400/1792] w-full lg:aspect-auto lg:h-full">
+            <Image
+              src="/images/hero-banner2.png"
+              alt={hero.imageAlt}
+              fill
+              priority
+              sizes="100vw"
+              className="hero-fade-full object-contain object-right mix-blend-multiply"
+            />
+          </div>
         </div>
       </section>
 
-      {/* ── 5 NHÓM SẢN PHẨM — Feature-Rich Showcase ── */}
-      <section className="section bg-white">
+      {/* ── 5 NHÓM SẢN PHẨM — chồng thẻ 3D chạy theo cuộn (bản tĩnh cho mobile / giảm chuyển động) ── */}
+      <section className="bg-navy-950 pt-14 text-white lg:pt-24">
         <div className="container-x">
           <SectionHead
+            dark
             title={home.catsTitle}
             lead={home.catsLead}
             action={
-              <Link href={`/${lang}/san-pham`} className="btn btn-outline">
+              <Link href={`/${lang}/san-pham`} className="btn btn-outline-light">
                 {common.viewAll} <IconArrowRight className="size-5" />
               </Link>
             }
           />
-
-          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mt-16 lg:grid-cols-6 lg:gap-6">
-            {categories.map((c, i) => {
-              const count = products.filter((p) => p.category === c.slug).length
+        </div>
+        <div className="pt-12 pb-14 lg:pt-8 lg:pb-0">
+          <CategoryScroller
+            items={categories.map((c) => {
               const catHref = `/${lang}/san-pham?danh-muc=${c.slug}`
               const shown = c.children.slice(0, 4)
-              const rest = c.children.length - shown.length
-              const cardCls =
-                i < 3 ? 'lg:col-span-2' : i === 3 ? 'lg:col-span-3 lg:flex-row' : 'md:col-span-2 md:flex-row lg:col-span-3'
-              const frameCls =
-                i < 3
-                  ? 'border-b'
-                  : i === 3
-                    ? 'border-b lg:aspect-auto lg:w-1/2 lg:border-r lg:border-b-0 lg:bg-white'
-                    : 'border-b md:aspect-auto md:w-1/2 md:border-r md:border-b-0 md:bg-white'
-              return (
-                <article key={c.slug} className={`card-lift flex flex-col rounded-sm border border-line bg-white ${cardCls}`}>
-                  <Link href={catHref} tabIndex={-1} aria-hidden className={`machine-frame block shrink-0 border-line ${frameCls}`}>
-                    <Image src={c.image} alt="" fill sizes="(min-width:1024px) 400px, (min-width:768px) 50vw, 100vw" />
-                  </Link>
-                  <div className="flex flex-1 flex-col p-4 lg:p-6">
-                    <h3 className="text-xl leading-7 font-bold text-navy">
-                      <Link href={catHref} className="underline-offset-4 hover:underline">{t(c.name, lang)}</Link>
-                    </h3>
-                    <p className="mt-2 text-[0.9375rem] leading-6 text-muted">{t(c.summary, lang)}</p>
-                    <ul className="mt-4 flex flex-wrap gap-2">
-                      {shown.map((s) => (
-                        <li key={s.slug}>
-                          <Link
-                            href={`${catHref}&nhom=${s.slug}`}
-                            className="inline-flex min-h-9 items-center rounded-xs border border-line px-3 text-sm text-ink transition-colors hover:border-navy hover:text-navy"
-                          >
-                            {t(s.name, lang)}
-                          </Link>
-                        </li>
-                      ))}
-                      {rest > 0 && (
-                        <li className="inline-flex min-h-9 items-center px-1 text-sm text-muted">+{rest} {home.more}</li>
-                      )}
-                    </ul>
-                    <div className="mt-auto pt-6">
-                      <Link
-                        href={catHref}
-                        className="flex min-h-11 items-center justify-between gap-3 border-t border-line pt-4 text-[0.9375rem] font-semibold text-navy hover:text-steel"
-                      >
-                        <span>
-                          {home.viewCategory}
-                          {count > 0 && <span className="font-normal text-muted"> · {count} {dict.products.results}</span>}
-                        </span>
-                        <IconArrowRight className="size-5" />
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              )
+              return {
+                slug: c.slug,
+                name: t(c.name, lang),
+                summary: t(c.summary, lang),
+                image: c.image,
+                href: catHref,
+                count: products.filter((p) => p.category === c.slug).length,
+                subs: shown.map((s) => ({ name: t(s.name, lang), href: `${catHref}&nhom=${s.slug}` })),
+                moreCount: c.children.length - shown.length,
+              }
             })}
-          </div>
+            labels={{ viewCategory: home.viewCategory, products: dict.products.results, more: home.more, goTo: home.catsTitle }}
+          />
         </div>
       </section>
 
-      {/* ── ĐỐI TÁC — lưới logo tĩnh ── */}
+      {/* ── ĐỐI TÁC — carousel 3 hàng tự cuộn ngang, xen kẽ chiều (tràn full chiều ngang) ── */}
       <section className="section border-t border-line bg-surface">
         <div className="container-x">
-          <SectionHead
-            title={home.partnersTitle}
-            action={
-              <Link href={`/${lang}/du-an`} className="btn btn-outline">
-                {home.partnersAll} <IconArrowRight className="size-5" />
-              </Link>
-            }
+          {/* Tiêu đề căn giữa (khác SectionHead) — đường kẻ ngắn phía trên giữ chất Swiss */}
+          <header className="mx-auto max-w-2xl text-center">
+            <span aria-hidden className="mx-auto block h-0.5 w-12 bg-navy" />
+            <h2 className="t-h2 mt-6">{home.partnersTitle}</h2>
+          </header>
+        </div>
+        <div className="mt-10 lg:mt-12">
+          <PartnerMarquee
+            logos={partnerLogos}
+            rows={3}
+            labels={{ pause: home.partnersPause, play: home.partnersPlay, region: home.partnersTitle }}
           />
-          <ul className="mt-12 grid grid-cols-2 border-t border-l border-line bg-white sm:grid-cols-3 lg:mt-16 lg:grid-cols-6">
-            {partnerLogos.slice(0, 12).map((src) => (
-              <li key={src} className="grid h-24 place-items-center border-r border-b border-line p-4">
-                <Image src={src} alt="" width={157} height={61} className="max-h-14 w-auto object-contain" unoptimized />
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
-      <PageQuickJump page="home" lang={lang} dict={dict} />
+      {/* <PageQuickJump page="home" lang={lang} dict={dict} /> */}
     </>
   )
 }

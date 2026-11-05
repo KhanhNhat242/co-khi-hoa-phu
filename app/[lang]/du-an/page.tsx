@@ -8,6 +8,8 @@ import { partnerLogos } from '@/data/partners'
 import PageHero from '@/components/layout/PageHero'
 import PageQuickJump from '@/components/layout/PageQuickJump'
 import SectionHead from '@/components/ui/SectionHead'
+import VideoGallery from '@/components/video/VideoGallery'
+import { videos } from '@/data/videos'
 
 export async function generateMetadata({ params }: PageProps<'/[lang]/du-an'>): Promise<Metadata> {
   const { lang } = await params
@@ -67,8 +69,21 @@ export default async function ProjectsPage({ params }: PageProps<'/[lang]/du-an'
         </div>
       </section>
 
+      {/* Video giới thiệu máy móc — phát ngay trên trang (YouTube nhúng) */}
+      <section id="video" className="section border-t border-line bg-surface">
+        <div className="container-x">
+          <SectionHead title={P.videosTitle} lead={P.videosLead} />
+          <div className="mt-12 lg:mt-16">
+            <VideoGallery
+              videos={videos.map((v) => ({ id: v.id, title: t(v.title, lang) }))}
+              labels={{ play: P.videoPlay, close: P.videoClose, openYoutube: P.videoOpenYoutube, dialogLabel: P.videoDialog }}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Đối tác — Social Proof: lưới logo */}
-      <section className="section border-t border-line bg-surface">
+      <section className="section border-t border-line">
         <div className="container-x">
           <SectionHead title={P.partnersTitle} lead={P.partnersLead} />
           <ul

@@ -454,6 +454,3 @@ export const brands = Array.from(
   new Set(products.map((p) => p.brand).filter((b): b is string => Boolean(b))),
 ).sort((a, b) => a.localeCompare(b))
 
-export const heroSlides = ['may-cha-nham-choi-dtl-20d', 'may-bao-goodtek', 'may-cnc-shoda-nc-261']
-  .map((s) => findProduct(s))
-  .filter((p): p is Product => Boolean(p))

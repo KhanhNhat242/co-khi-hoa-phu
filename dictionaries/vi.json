@@ -64,7 +64,25 @@
         "v": "TP. Thủ Đức, TP.HCM"
       }
     ],
-    "hotline": "Hotline / Zalo"
+    "hotline": "Hotline / Zalo",
+    "kicker": "Cơ khí Hoà Phú · TP. Thủ Đức",
+    "title": "Giải pháp máy móc trọn gói cho ngành gỗ.",
+    "lead2": "Từ tư vấn, chế tạo đến lắp đặt: máy chế biến gỗ mới và đã qua sử dụng, dây chuyền sản xuất, băng tải công nghiệp và gia công cơ khí theo yêu cầu.",
+    "stats": [
+      {
+        "v": "5",
+        "k": "Nhóm sản phẩm"
+      },
+      {
+        "v": "Mới & cũ",
+        "k": "Máy chế biến gỗ"
+      },
+      {
+        "v": "0913 813 412",
+        "k": "Hotline / Zalo"
+      }
+    ],
+    "imageAlt": "Linh kiện cơ khí: bánh răng, ổ bi trên bản vẽ kỹ thuật"
   },
   "home": {
     "catsEyebrow": "Sản phẩm & dịch vụ",
@@ -76,7 +94,9 @@
     "partnersAll": "Xem tất cả đối tác",
     "catsLabel": "Danh mục",
     "viewCategory": "Xem danh mục",
-    "more": "khác"
+    "more": "khác",
+    "partnersPause": "Tạm dừng",
+    "partnersPlay": "Chạy tiếp"
   },
   "about": {
     "title": "Giới thiệu Công ty TNHH Cơ Khí Hoà Phú",
@@ -93,19 +113,19 @@
     "usp": [
       {
         "title": "Kinh nghiệm hoạt động",
-        "text": "Số năm hoạt động trong ngành máy chế biến gỗ đang chờ khách xác nhận."
+        "text": "11 năm hoạt động trong ngành máy chế biến gỗ."
       },
       {
         "title": "Tự thiết kế & chế tạo dây chuyền",
-        "text": "Phạm vi thiết kế, chế tạo dây chuyền theo yêu cầu đang chờ khách xác nhận."
+        "text": ""
       },
       {
         "title": "Bảo hành – bảo trì",
-        "text": "Chính sách bảo hành, bảo trì cho máy mới và máy đã qua sử dụng đang cập nhật."
+        "text": "Chính sách bảo hành, bảo trì cho máy mới và máy đã qua sử dụng."
       },
       {
         "title": "Lắp đặt tận nơi",
-        "text": "Khu vực hỗ trợ lắp đặt, vận hành thử tại xưởng khách hàng đang chờ xác nhận."
+        "text": "Khu vực hỗ trợ lắp đặt, vận hành thử tại xưởng."
       }
     ],
     "storyLabel": "Giới thiệu",
@@ -197,7 +217,13 @@
     "partnersLead": "Logo các doanh nghiệp đối tác do Hoà Phú cung cấp. Thông tin chi tiết về từng dự án sẽ được bổ sung khi có sự đồng ý của đối tác.",
     "gridLabel": "Hình ảnh",
     "partnersLabel": "Đối tác",
-    "pendingNote": "Tên đối tác và khu vực triển khai của từng hạng mục đang chờ khách hàng xác nhận."
+    "pendingNote": "Tên đối tác và khu vực triển khai của từng hạng mục đang chờ khách hàng xác nhận.",
+    "videosTitle": "Video giới thiệu máy móc",
+    "videosLead": "Xem máy vận hành thực tế ngay trên trang. Bấm vào từng máy để phát video, cần tư vấn thêm hãy gửi yêu cầu báo giá.",
+    "videoPlay": "Phát video",
+    "videoClose": "Đóng video",
+    "videoOpenYoutube": "Mở trên YouTube",
+    "videoDialog": "Video"
   },
   "news": {
     "title": "Tin tức kỹ thuật và cẩm nang vận hành máy",

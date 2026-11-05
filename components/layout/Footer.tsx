@@ -78,8 +78,8 @@ export default function Footer({ lang, dict, nav }: Props) {
         </div>
       </div>
       <div className="border-t border-white/20">
-        <p className="container-x py-6 text-sm text-white/80">
-          © 2026 {t(siteConfig.name, lang)}. {dict.footer.rights}
+        <p className="container-x py-6 text-sm text-center text-white/80">
+          © 2026 {t(siteConfig.name, lang)}
         </p>
       </div>
     </footer>
