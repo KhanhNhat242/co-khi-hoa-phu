@@ -26,7 +26,7 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
           Ngoại lệ đã duyệt cho Flat (REQUIREMENTS mục 6): gradient chỉ dùng ở hero trang chủ. */}
       <section
         id="hero"
-        className="hero-mesh relative isolate -mt-(--header-h) overflow-hidden pt-(--header-h) text-navy lg:flex lg:min-h-svh lg:items-center"
+        className="hero-mesh relative isolate -mt-(--header-h) overflow-hidden pt-(--header-h) text-navy lg:flex lg:min-h-[min(100svh,900px)] lg:items-center"
       >
         <div className="container-x relative z-10">
           <div className="py-14 lg:w-[54%] lg:py-20 lg:pr-8 xl:w-[46%]">

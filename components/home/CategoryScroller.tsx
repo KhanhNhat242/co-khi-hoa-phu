@@ -71,7 +71,8 @@ function StaticList({ items, labels }: { items: ScrollerItem[]; labels: Labels }
 }
 
 /* ───────────────────────── Sân khấu 3D sticky ───────────────────────── */
-const STEP_VH = 70 // mỗi nhóm chiếm 70vh quãng cuộn
+// Mỗi nhóm chiếm 70svh quãng cuộn, tối đa 630px (= 70% màn 900px) → màn hình cao không làm section dài thêm
+const STEP = 'min(70svh, 630px)'
 // Sân khấu cao vừa nội dung (không full màn hình) và dính ở giữa vùng dưới header
 // → không còn khoảng trống lớn giữa tiêu đề section và thẻ đầu tiên.
 const STAGE_H = 'min(calc(100svh - var(--header-h) - 48px), 600px)'
@@ -164,7 +165,7 @@ function Stage({ items, labels }: { items: ScrollerItem[]; labels: Labels }) {
   const c = items[active]
 
   return (
-    <div ref={wrapRef} style={{ height: `calc(${STAGE_H} + ${(n - 1) * STEP_VH}svh)` }} className="relative">
+    <div ref={wrapRef} style={{ height: `calc(${STAGE_H} + ${STEP} * ${n - 1})` }} className="relative">
       <div ref={stageRef} style={{ top: STAGE_TOP, height: STAGE_H }} className="sticky flex items-center overflow-hidden">
         <div className="container-x grid-12 w-full items-center">
           {/* Cột trái: số thứ tự, tên nhóm, danh mục con */}
