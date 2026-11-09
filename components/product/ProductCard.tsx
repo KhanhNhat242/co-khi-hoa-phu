@@ -1,68 +1,64 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Product } from '@/data/products'
-import { t, type Locale } from '@/lib/i18n'
+import { plainText, t, type Locale } from '@/lib/i18n'
 import QuoteButton from '@/components/quote/QuoteButton'
-import ConditionBadge from './ConditionBadge'
 
 export type CardLabels = { new: string; used: string; requestQuote: string; viewSpecs: string }
 
 type Props = {
   product: Product
   lang: Locale
-  categoryName: string
+  /** Không còn hiển thị trên thẻ (khách bỏ thẻ tag 2026-11-09) — giữ để các nơi gọi không phải sửa */
+  categoryName?: string
   labels: CardLabels
   priority?: boolean
 }
 
 /**
- * Thẻ sản phẩm — Flat: viền 1px, bo 4px, không shadow; hover nhấc thẻ 4px (ảnh giữ nguyên).
- * Thanh trạng thái TRÊN ảnh, không đè lên ảnh (R1); nút báo giá trên mọi thẻ (R4).
+ * Thẻ sản phẩm (bố cục theo ảnh mẫu khách gửi 2026-11-09): thẻ trắng bo góc, ảnh trên ô nền xám
+ * (KHÔNG đè gì lên ảnh, R1), tên + hãng/model,
+ * 2 dòng thông số, nút "Yêu cầu báo giá" (không giá, R4). Tên & ảnh dẫn tới trang chi tiết.
  */
-export default function ProductCard({ product, lang, categoryName, labels, priority }: Props) {
+export default function ProductCard({ product, lang, labels, priority }: Props) {
   const name = t(product.name, lang)
   const href = `/${lang}/san-pham/${product.slug}`
   const cover = product.images[0]
+  // Góc phải: hãng; nếu không có hãng thì model — trừ khi tên máy đã chứa model (tránh lặp)
+  const maker =
+    product.brand ?? (product.model && !plainText(name).includes(product.model) ? product.model : undefined)
 
   return (
-    <article className="card-lift flex h-full flex-col rounded-sm border border-line bg-white">
-      <div className="flex min-h-12 items-center justify-between gap-3 border-b border-line px-4">
-        <ConditionBadge condition={product.condition} labels={labels} />
-        {(product.brand || product.model) && (
-          <span className="truncate text-sm font-semibold text-muted">{product.brand ?? product.model}</span>
-        )}
-      </div>
-
-      <Link href={href} className="machine-frame block" tabIndex={-1} aria-hidden>
+    <article className="card-lift group flex h-full flex-col rounded-[14px] border border-line bg-white p-3 shadow-[0_12px_28px_-22px_rgb(11_42_74/0.45)]">
+      <Link href={href} className="relative block aspect-[4/3] overflow-hidden rounded-[10px] bg-surface" tabIndex={-1} aria-hidden>
         <Image
           src={cover.src}
           alt=""
           fill
-          sizes="(min-width:1280px) 300px, (min-width:768px) 45vw, 100vw"
+          sizes="(min-width:1280px) 300px, (min-width:640px) 45vw, 100vw"
           priority={priority}
+          className="object-contain p-2"
         />
       </Link>
 
-      <div className="flex flex-1 flex-col border-t border-line p-4 lg:p-6">
-        <p className="text-sm leading-5 font-medium text-steel">{categoryName}</p>
-        <h3 className="mt-2 text-lg leading-6 font-bold text-navy">
-          <Link href={href} className="underline-offset-4 hover:underline">{name}</Link>
-        </h3>
-        <ul className="mt-4 space-y-2 border-t border-line pt-4 text-[0.9375rem] leading-6 text-muted">
-          {product.highlights.map((h, i) => (
-            <li key={i} className="flex gap-2">
-              <span className="mt-[0.6875rem] h-0.5 w-2 shrink-0 bg-navy" aria-hidden />
-              <span>{t(h, lang)}</span>
-            </li>
-          ))}
-        </ul>
-        <div className="mt-auto grid grid-cols-1 gap-2 pt-6">
-          <QuoteButton product={name} image={cover.src} className="btn btn-accent btn-sm w-full">
+      <div className="flex flex-1 flex-col px-1 pt-4">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="min-w-0 text-base leading-6 font-bold text-navy">
+            <Link href={href} className="underline-offset-4 hover:underline">{name}</Link>
+          </h3>
+          {maker && <span className="shrink-0 pt-0.5 text-[0.9375rem] leading-6 font-bold text-navy">{maker}</span>}
+        </div>
+
+        <p className="mt-3 text-sm leading-5 text-muted">{product.highlights.map((h) => t(h, lang)).join(' · ')}</p>
+
+        <div className="mt-auto pt-4">
+          <QuoteButton
+            product={name}
+            image={cover.src}
+            className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-accent px-4 text-sm font-semibold text-navy transition-colors hover:bg-amber"
+          >
             {labels.requestQuote}
           </QuoteButton>
-          <Link href={href} className="btn btn-outline btn-sm w-full">
-            {labels.viewSpecs}
-          </Link>
         </div>
       </div>
     </article>

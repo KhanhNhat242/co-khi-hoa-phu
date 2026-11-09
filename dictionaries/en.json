@@ -24,6 +24,7 @@
     "requestQuote": "Request a quote",
     "viewProducts": "View products",
     "viewSpecs": "Specs & PDF",
+    "details": "Details",
     "viewAll": "View all",
     "readMore": "Read article",
     "new": "New",
@@ -146,6 +147,11 @@
     "showFilters": "Show filters",
     "hideFilters": "Hide filters",
     "selected": "Selected",
+    "showing": "Showing",
+    "sortBy": "Sort by",
+    "sortDefault": "Default",
+    "sortNameAsc": "Name A → Z",
+    "sortNameDesc": "Name Z → A",
     "clearSearch": "Clear search"
   },
   "product": {

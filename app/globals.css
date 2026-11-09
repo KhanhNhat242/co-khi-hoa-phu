@@ -49,7 +49,7 @@
   --default-transition-duration: 150ms;
   --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
 
-  --header-h: 72px;
+  --header-h: 56px;
 }
 
 /* ==========================================================================

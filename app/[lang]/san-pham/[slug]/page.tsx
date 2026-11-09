@@ -12,6 +12,7 @@ import ConditionBadge from '@/components/product/ConditionBadge'
 import QuoteButton from '@/components/quote/QuoteButton'
 import SectionHead from '@/components/ui/SectionHead'
 import PageQuickJump from '@/components/layout/PageQuickJump'
+import SpecsAccordion from '@/components/product/SpecsAccordion'
 import { IconArrowRight, IconFile, IconPhone, IconPlay } from '@/components/ui/Icons'
 
 // Trang đọc `slug` ngoài <Suspense> (R7: không dùng skeleton rỗng). Mọi slug đã prerender qua generateStaticParams
@@ -133,7 +134,12 @@ export default async function ProductDetailPage({ params }: PageProps<'/[lang]/s
               )}
             </div>
 
-            <a href={siteConfig.phoneHref} className="group mt-8 flex items-center gap-4 border-t border-line pt-6">
+            {/* Thông số kỹ thuật — thanh thu gọn, bấm để mở (ảnh mẫu khách gửi) */}
+            <div className="mt-8">
+              <SpecsAccordion title={L.specsTitle} specs={specs} />
+            </div>
+
+            <a href={siteConfig.phoneHref} className="group mt-8 flex items-center gap-4">
               <span className="grid size-12 shrink-0 place-items-center rounded-xs bg-navy text-white transition-colors group-hover:bg-accent group-hover:text-navy">
                 <IconPhone className="size-5" />
               </span>
@@ -142,39 +148,6 @@ export default async function ProductDetailPage({ params }: PageProps<'/[lang]/s
                 <span className="mt-1 block text-xl font-bold text-navy tabular-nums">{siteConfig.phoneDisplay}</span>
               </span>
             </a>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-t border-line bg-surface py-12 lg:py-16">
-        <div className="container-x grid-12 gap-y-10">
-          {/* Data-Dense: bảng thông số — hàng 36px, khoảng cách gọn */}
-          <div className="col-span-4 md:col-span-12 lg:col-span-7">
-            <h2 className="text-2xl leading-8 font-bold text-navy">{L.specsTitle}</h2>
-            <table className="mt-4 w-full border-collapse border border-line bg-white text-sm">
-              <tbody>
-                {specs.map(([k, v]) => (
-                  <tr key={k} className="h-9 border-b border-line even:bg-surface/60">
-                    <th scope="row" className="w-2/5 border-r border-line px-3 py-1.5 text-left align-middle font-semibold text-navy">{k}</th>
-                    <td className="px-3 py-1.5 align-middle text-ink">{v}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="col-span-4 md:col-span-12 lg:col-span-5">
-            <h2 className="text-2xl leading-8 font-bold text-navy">{L.video}</h2>
-            {product.video ? (
-              <div className="mt-4 aspect-video overflow-hidden rounded-sm bg-navy">
-                <iframe src={product.video} title={name} loading="lazy" allowFullScreen className="size-full" />
-              </div>
-            ) : (
-              // TODO(khach): video vận hành
-              <div className="mt-4 flex aspect-video flex-col items-center justify-center gap-3 rounded-sm border border-dashed border-line-strong bg-white p-6 text-center">
-                <IconPlay className="size-10 text-muted" />
-                <p className="max-w-xs text-[0.9375rem] text-muted">{L.videoPending}</p>
-              </div>
-            )}
           </div>
         </div>
       </section>
@@ -193,7 +166,7 @@ export default async function ProductDetailPage({ params }: PageProps<'/[lang]/s
         </section>
       )}
 
-      <PageQuickJump page="products" lang={lang} dict={dict} />
+      {/* <PageQuickJump page="products" lang={lang} dict={dict} /> */}
     </>
   )
 }

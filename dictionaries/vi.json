@@ -24,6 +24,7 @@
     "requestQuote": "Yêu cầu báo giá",
     "viewProducts": "Xem sản phẩm",
     "viewSpecs": "Xem thông số & PDF",
+    "details": "Chi tiết",
     "viewAll": "Xem tất cả",
     "readMore": "Đọc bài viết",
     "new": "Mới",
@@ -146,6 +147,11 @@
     "showFilters": "Hiện bộ lọc",
     "hideFilters": "Ẩn bộ lọc",
     "selected": "Đang chọn",
+    "showing": "Hiển thị",
+    "sortBy": "Sắp xếp",
+    "sortDefault": "Mặc định",
+    "sortNameAsc": "Tên A → Z",
+    "sortNameDesc": "Tên Z → A",
     "clearSearch": "Xoá từ khoá"
   },
   "product": {

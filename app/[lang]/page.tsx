@@ -73,19 +73,18 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
           </div>
         </div>
 
-        {/* Ảnh linh kiện — KHÔNG cắt ảnh: desktop cao full màn hình, rộng theo đúng tỉ lệ 2400×1792, bám mép phải;
-            phần chữ bên trái (z-10) được phép đè lên ảnh. Chỉ mờ góc trên-trái (.hero-fade-full).
-            Nền trắng của ảnh hoà vào gradient (mix-blend-multiply) — mobile: khối dưới nội dung */}
-        <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-[2400/1792] lg:h-full lg:max-w-full">
-          {/* Không dùng transform/opacity/mask trên khung bọc: sẽ tách nhóm hoà trộn và làm mất multiply */}
-          <div className="relative aspect-[2400/1792] w-full lg:aspect-auto lg:h-full">
+        {/* Ảnh nhà xưởng (hero-banner3.png, ảnh chụp tông tối, không tem/watermark) — desktop: chiếm ~55% bên phải,
+            phủ kín chiều cao (object-cover), mép trái chuyển tiếp mềm vào nền gradient (mask nhiều nấc, ~55% bề rộng ảnh) để cột chữ bên trái luôn nằm trên nền sáng.
+            Mobile: khối ảnh dưới nội dung, mép trên mờ vào gradient. */}
+        <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-[56%]">
+          <div className="relative aspect-[735/490] w-full lg:aspect-auto lg:h-full">
             <Image
-              src="/images/hero-banner2.png"
+              src="/images/hero-banner3.png"
               alt={hero.imageAlt}
               fill
               priority
-              sizes="100vw"
-              className="hero-fade-full object-contain object-right mix-blend-multiply"
+              sizes="(min-width:1024px) 56vw, 100vw"
+              className="object-cover [mask-image:linear-gradient(to_bottom,transparent_0,#000_22%)] lg:[mask-image:linear-gradient(to_right,transparent_0%,rgb(0_0_0/0.18)_14%,rgb(0_0_0/0.55)_28%,rgb(0_0_0/0.88)_42%,#000_55%)]"
             />
           </div>
         </div>
@@ -105,7 +104,7 @@ export default async function HomePage({ params }: PageProps<'/[lang]'>) {
             }
           />
         </div>
-        <div className="pt-12 pb-14 lg:pt-8 lg:pb-0">
+        <div className="pt-12 pb-14 lg:pt-0 lg:pb-16">
           <CategoryScroller
             items={categories.map((c) => {
               const catHref = `/${lang}/san-pham?danh-muc=${c.slug}`

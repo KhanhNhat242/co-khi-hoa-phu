@@ -46,18 +46,20 @@ export default function VideoGallery({ videos, labels }: Props) {
                 openerRef.current = e.currentTarget
                 setActive(v)
               }}
-              className="card-lift group flex h-full w-full flex-col rounded-sm border border-line bg-white text-left"
+              className="card-lift group flex h-full w-full flex-col rounded-[14px] bg-navy p-2.5 text-left text-white shadow-[0_16px_32px_-20px_rgb(11_42_74/0.6)]"
             >
-              <span className="relative block aspect-video bg-white">
+              {/* Thẻ kiểu "poster" theo ảnh mẫu khách gửi: ảnh bo góc trong khung tối, tên lớn, hàng thông tin phụ.
+                  Thumbnail có watermark → contain trên nền đen, không đè gì lên ảnh (R1) */}
+              <span className="relative block aspect-video overflow-hidden rounded-[10px] bg-black">
                 <Image src={ytThumb(v.id)} alt="" fill sizes="(min-width:1024px) 300px, (min-width:640px) 50vw, 100vw" className="object-contain" />
               </span>
-              <span className="flex flex-1 items-start gap-3 border-t border-line p-4">
-                <span className="grid size-10 shrink-0 place-items-center rounded-xs bg-navy text-white transition-colors group-hover:bg-accent group-hover:text-navy">
-                  <svg viewBox="0 0 24 24" className="size-4" aria-hidden fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-                </span>
-                <span className="min-w-0">
-                  <span className="block text-[0.9375rem] leading-6 font-semibold text-navy">{v.title}</span>
-                  <span className="mt-1 block text-sm text-muted">{labels.play}</span>
+              <span className="flex flex-1 flex-col px-1.5 pt-3 pb-1">
+                <span className="line-clamp-2 text-lg leading-6 font-semibold">{v.title}</span>
+                <span className="mt-auto flex items-center justify-between gap-3 pt-3 text-sm text-white/75">
+                  <span>{labels.play}</span>
+                  <span aria-hidden className="grid size-8 place-items-center rounded-full bg-accent text-navy transition-transform duration-200 group-hover:scale-110">
+                    <svg viewBox="0 0 24 24" className="size-3.5" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                  </span>
                 </span>
               </span>
             </button>

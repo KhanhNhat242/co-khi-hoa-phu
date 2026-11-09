@@ -24,13 +24,13 @@ export default function Footer({ lang, dict, nav }: Props) {
             </div>
             <p className="mt-6 max-w-sm text-[0.9375rem] leading-6 text-white/85">{dict.footer.about}</p>
             <div className="mt-6 flex gap-2">
-              <a href={siteConfig.zalo} target="_blank" rel="noopener noreferrer" aria-label="Zalo" className="grid size-11 place-items-center rounded-xs border border-white/40 text-white transition-colors hover:border-white">
+              <a href={siteConfig.zalo} target="_blank" rel="noopener noreferrer" aria-label="Zalo" className="grid size-11 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20">
                 <IconZalo className="size-6" />
               </a>
-              <a href={siteConfig.messenger} target="_blank" rel="noopener noreferrer" aria-label="Messenger" className="grid size-11 place-items-center rounded-xs border border-white/40 transition-colors hover:border-white">
+              <a href={siteConfig.messenger} target="_blank" rel="noopener noreferrer" aria-label="Messenger" className="grid size-11 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white/20">
                 <IconMessenger className="size-5" />
               </a>
-              <a href={siteConfig.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="grid size-11 place-items-center rounded-xs border border-white/40 text-lg font-bold transition-colors hover:border-white">
+              <a href={siteConfig.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="grid size-11 place-items-center rounded-full bg-white/10 text-lg font-bold transition-colors hover:bg-white/20">
                 f
               </a>
             </div>

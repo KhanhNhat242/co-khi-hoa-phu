@@ -12,9 +12,25 @@ type Labels = { requestQuote: string; pending: string; listLabel: string }
 const DESKTOP_QUERY = '(min-width: 64rem)'
 const REDUCED_QUERY = '(prefers-reduced-motion: reduce)'
 
-/** Chiều cao header dính (px) — lấy từ biến CSS --header-h */
-const headerOffset = () =>
-  parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72
+/**
+ * Sân khấu dính cao vừa nội dung (không full màn hình) và nằm giữa vùng dưới header
+ * → không thừa khoảng trống trên/dưới section. Mỗi lần chuyển thẻ ứng với STEP_SVH quãng cuộn.
+ */
+const STAGE_H = 'min(calc(100svh - var(--header-h) - 48px), 600px)'
+const STAGE_TOP = `calc(var(--header-h) + (100svh - var(--header-h) - ${STAGE_H}) / 2)`
+const STEP_SVH = 60
+
+/** Vị trí dính (px từ mép trên viewport) + chiều cao sân khấu, đọc từ CSS đã tính */
+const stageMetrics = (stage: HTMLElement | null) => ({
+  top: stage ? parseFloat(getComputedStyle(stage).top) || 0 : 0,
+  height: stage?.offsetHeight ?? window.innerHeight,
+})
+
+/** Tỉ lệ ảnh lấy từ tên file kiểu `_440x280.jpg` (ảnh kho khách gửi) — mặc định 4:3 */
+const imageRatio = (src: string) => {
+  const m = src.match(/_(\d+)x(\d+)\.\w+$/)
+  return m ? `${m[1]} / ${m[2]}` : '4 / 3'
+}
 
 /**
  * Biến đổi cho thẻ thứ i khi "vị trí" cuộn là position (0 → n-1).
@@ -59,6 +75,7 @@ export default function StrengthDeck({
   labels: Labels
 }) {
   const sectionRef = useRef<HTMLDivElement>(null)
+  const stageRef = useRef<HTMLDivElement>(null)
   const cardRefs = useRef<(HTMLLIElement | null)[]>([])
   const [active, setActive] = useState(0)
   const [interactive, setInteractive] = useState(false)
@@ -73,9 +90,9 @@ export default function StrengthDeck({
       frame = 0
       const section = sectionRef.current
       if (!section) return
-      const offset = headerOffset()
+      const { top: offset, height } = stageMetrics(stageRef.current)
       const rect = section.getBoundingClientRect()
-      const scrollable = rect.height - (window.innerHeight - offset)
+      const scrollable = rect.height - height
       const progress = scrollable > 0 ? Math.min(Math.max((offset - rect.top) / scrollable, 0), 1) : 0
       const position = progress * (count - 1)
       cardRefs.current.forEach((card, index) => {
@@ -123,9 +140,9 @@ export default function StrengthDeck({
   function goTo(index: number) {
     const section = sectionRef.current
     if (!section) return
-    const offset = headerOffset()
+    const { top: offset, height } = stageMetrics(stageRef.current)
     const rect = section.getBoundingClientRect()
-    const scrollable = rect.height - (window.innerHeight - offset)
+    const scrollable = rect.height - height
     const sectionTop = window.scrollY + rect.top
     const target = sectionTop - offset + (index / (count - 1)) * scrollable + 1
     const smooth = !window.matchMedia(REDUCED_QUERY).matches
@@ -135,10 +152,13 @@ export default function StrengthDeck({
   return (
     <div
       ref={sectionRef}
-      style={{ '--deck-count': count } as CSSProperties}
-      className="lg:h-[calc(var(--deck-count)*70svh)] motion-reduce:lg:h-auto"
+      style={{ '--deck-h': `calc(${STAGE_H} + ${(count - 1) * STEP_SVH}svh)`, '--stage-h': STAGE_H, '--stage-top': STAGE_TOP } as CSSProperties}
+      className="lg:h-(--deck-h) motion-reduce:lg:h-auto"
     >
-      <div className="grid grid-cols-1 gap-10 lg:sticky lg:top-(--header-h) lg:h-[calc(100svh-var(--header-h))] lg:grid-cols-12 lg:items-center lg:gap-8 motion-reduce:lg:static motion-reduce:lg:h-auto">
+      <div
+        ref={stageRef}
+        className="grid grid-cols-1 gap-10 lg:sticky lg:top-(--stage-top) lg:h-(--stage-h) lg:grid-cols-12 lg:items-center lg:gap-8 motion-reduce:lg:static motion-reduce:lg:h-auto"
+      >
         {/* Cột trái: tiêu đề + danh sách điểm mạnh (điều hướng chồng thẻ) */}
         <div className="lg:col-span-5">
           {header}
@@ -167,7 +187,8 @@ export default function StrengthDeck({
         </div>
 
         {/* Cột phải: chồng thẻ */}
-        <div className="lg:col-span-6 lg:col-start-7 lg:flex lg:justify-center">
+        {/* Chồng thẻ dời sát về phía danh sách; pl chừa chỗ cho các thẻ phía sau xoè sang trái */}
+        <div className="lg:col-span-6 lg:col-start-7 lg:flex lg:justify-start lg:pl-16">
           <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:relative lg:block lg:h-[31rem] lg:w-[23.75rem] motion-reduce:lg:grid motion-reduce:lg:h-auto motion-reduce:lg:w-auto">
             {items.map((item, index) => {
               const hidden = interactive && index !== active
@@ -197,8 +218,8 @@ function StrengthCard({ item, labels }: { item: Strength; labels: Labels }) {
   return (
     <article className="flex w-full flex-col overflow-hidden rounded-[20px] bg-navy text-white shadow-[0_24px_48px_-20px_rgb(11_42_74/0.55)]">
       {/* Thẻ cao theo nội dung (không kéo giãn) → nút nằm ngay dưới mô tả, không thừa khoảng trống */}
-      {/* Ảnh có watermark → khung 4:3, object-contain trên nền trắng, KHÔNG phủ chữ/gradient (R1) */}
-      <div className="relative aspect-[4/3] shrink-0 bg-white">
+      {/* Ảnh có watermark → khung đúng tỉ lệ gốc (không dải trắng), object-contain, KHÔNG phủ chữ/gradient (R1) */}
+      <div className="relative shrink-0 bg-white" style={{ aspectRatio: imageRatio(item.image) }}>
         <Image src={item.image} alt={item.imageAlt} fill sizes="(min-width:1024px) 380px, (min-width:640px) 50vw, 100vw" className="object-contain" />
       </div>
       <div className="flex flex-col p-6">

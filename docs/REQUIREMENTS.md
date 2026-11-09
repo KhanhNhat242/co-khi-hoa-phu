@@ -194,6 +194,8 @@ Sản phẩm
 - Section Ảnh thực tế (trang Dự án, ảnh mẫu khách gửi 2026-11-05): tiêu đề căn giữa + **carousel 3D cong** (thẻ giữa thẳng, thẻ 2 bên nghiêng vào trong), không nút prev/next; ≥1024px & không giảm chuyển động: sân khấu sticky, cuộn lên/xuống trong section để chuyển ảnh (có dải chấm chọn ảnh); chỉ thẻ chính có chú thích **đè lên ảnh** (lớp phủ navy dưới đáy), thẻ phụ không chữ. Mobile/giảm chuyển động: carousel vuốt ngang (scroll-snap), mỗi thẻ có chú thích. **Ngoại lệ R1** (theo cùng căn cứ khách đã duyệt cho Giới thiệu/Dịch vụ): 6 ảnh chỉ có watermark Hoà Phú/KUBOKE, không thấy tem Thành Nhân → cho phép `object-cover` + chữ đè.
 - Section Quy trình 4 bước (trang Dịch vụ): infographic theo ảnh mẫu khách gửi (2026-11-05) — nửa vòng tròn chứa tiêu đề, đường cong nét đứt nối 4 chấm, số thứ tự tròn + thẻ bo tròn kiểu viên thuốc nền xanh nhạt `steel-50`, hover → nền `steel` chữ trắng (200ms) và cung tiến trình chạy dọc đường nét đứt tới chấm của bước đang hover (600ms, tắt khi `prefers-reduced-motion`). Không ảnh (không liên quan R1). Mobile: danh sách dọc với đường nét đứt.
 - Section Quy mô & điểm mạnh (trang Giới thiệu): chồng thẻ chạy theo cuộn, thẻ bo 20px + bóng mềm theo mẫu khách gửi; ảnh trong thẻ vẫn contain, không phủ chữ (R1).
+- Nút liên hệ nổi (Gọi/Zalo/Messenger) và icon mạng xã hội ở footer: **hình tròn, không viền** (khách yêu cầu 2026-11-09).
+- Thẻ video (trang Dự án, ảnh mẫu khách gửi 2026-11-09): kiểu "poster" nền navy bo 14px + bóng mềm, thumbnail bo góc (contain, R1), tên lớn 2 dòng, hàng dưới "Xem video" + nút play tròn cam. Không thêm năm/điểm đánh giá như ảnh mẫu (R2).
 - Header trong suốt hoà vào hero, chỉ còn logo + 7 mục menu dồn trái + nút chuyển ngôn ngữ VI/EN ở góc phải; cuộn qua hero thì chuyển về header navy đầy đủ (animation 200ms). Các trang khác luôn dùng header navy.
 
 **Style bổ trợ theo khu vực:**
@@ -310,6 +312,22 @@ Mọi thông tin đánh dấu [cần xin khách] / [cần xác nhận] → dùng
 | Ngày | Người | Thay đổi |
 |---|---|---|
 | 2026-11-05 | Dev | Khởi tạo tài liệu từ Phiếu Dev 42 |
+| 2026-11-09 | Dev | Thẻ sản phẩm: bỏ hẳn thẻ tag "Tình trạng · Nhóm máy" theo yêu cầu khách. |
+| 2026-11-09 | Dev | Bộ lọc trang Sản phẩm sát ảnh mẫu hơn: chip bo tròn (chọn = nền navy, bỏ dấu tick), tiêu đề nhóm nhỏ, khoảng cách gọn, ô tìm kiếm bo tròn. Chip giữ cao 40px (vùng bấm). |
+| 2026-11-09 | Dev | Thẻ sản phẩm: bỏ nút "Chi tiết"; tình trạng + nhóm máy gộp thành 1 thẻ tag ở góc trên-phải (hàng riêng trên ảnh, R1). |
+| 2026-11-09 | Dev | Thẻ sản phẩm (danh sách + sản phẩm liên quan) làm lại theo ảnh mẫu: thẻ trắng bo góc, ảnh trên ô xám, tên + hãng/model cùng hàng, 2 nút bo tròn "Chi tiết" + "Yêu cầu báo giá". Thêm key `common.details`. |
+| 2026-11-09 | Dev | Dự án – Video giới thiệu máy: thẻ video đổi sang kiểu poster theo ảnh mẫu (nền navy, thumbnail bo góc, tên lớn, hàng "Xem video" + nút play). |
+| 2026-11-09 | Dev | Giới thiệu – Quy mô & điểm mạnh: bớt khoảng trống — sân khấu dính cao vừa nội dung (≤600px) giữa vùng dưới header, chồng thẻ dời sát danh sách, khung ảnh trong thẻ theo đúng tỉ lệ gốc (bỏ dải trắng). |
+| 2026-11-09 | Dev | Header ở trạng thái hero (trong suốt): bỏ ô nền trắng sau logo (logo PNG nền trong suốt) để không lệch màu với gradient; header navy vẫn giữ ô trắng. |
+| 2026-11-09 | Dev | Hero: chuyển tiếp gradient mềm giữa ảnh banner và nền bên trái (mask nhiều nấc trên ~55% bề rộng ảnh). |
+| 2026-11-09 | Dev | Logo đối tác: khung logo 84×84 → 88×64px (logo vuông gốc ~57px chỉ phóng ≤1,15 lần, logo ngang vẫn đủ rộng) để logo nét hơn. |
+| 2026-11-09 | Dev | Hero trang chủ đổi ảnh sang `hero-banner3.png` (ảnh chụp nhà xưởng tông tối, 735×490): bỏ `mix-blend-multiply`, ảnh 56% bên phải `object-cover` + mờ mép trái vào gradient. Lưu ý: ảnh gốc độ phân giải thấp, hiển thị full chiều cao bị phóng to ~1,8 lần. |
+| 2026-11-09 | Dev | Logo đối tác to hơn: tạo bản cắt viền trắng `public/images/doi-tac/*.png` từ ảnh gốc khách gửi (giữ nguyên thư mục gốc), logo lấp đầy ô thẻ. |
+| 2026-11-09 | Dev | 5 nhóm sản phẩm (trang chủ): sân khấu sticky cao vừa nội dung (≤600px) và dính giữa vùng dưới header, bỏ khoảng trống lớn giữa tiêu đề section và thẻ đầu tiên. |
+| 2026-11-09 | Dev | Header thấp hơn: 72px → 56px (`--header-h`), logo 40px, bỏ dòng mô tả "Máy & thiết bị ngành gỗ" cạnh tên công ty (theo yêu cầu khách). |
+| 2026-11-09 | Dev | Nút liên hệ nổi + icon Zalo/Messenger/Facebook ở footer: bỏ viền trắng, đổi sang hình tròn. |
+| 2026-11-06 | Dev | Chi tiết máy: bảng thông số chuyển từ section riêng lên cột phải cạnh ảnh, dạng thanh thu gọn có animation mở (`components/product/SpecsAccordion.tsx`). |
+| 2026-11-06 | Dev | Trang Sản phẩm làm lại bố cục theo ảnh mẫu (sidebar không khung, thanh công cụ có Sắp xếp, thẻ nền xám). Giá/giỏ hàng trong ảnh mẫu thay bằng nút báo giá (R4); nhãn không đè ảnh (R1). |
 | 2026-11-05 | Dev | Trang chi tiết sản phẩm & tin tức: `export const instant = false` (Next 16 partialPrefetching) — giữ nội dung đầy đủ trong HTML prerender thay vì tách Suspense + skeleton (R7). |
 | 2026-11-05 | Dev | Dự án: section Ảnh thực tế từ bento → carousel 3D cong chạy theo cuộn (`components/projects/ProjectCarousel.tsx`), tiêu đề căn giữa, chú thích đè lên ảnh chính. |
 | 2026-11-05 | Dev | 3 mảng dịch vụ: mặc định tiêu đề đè lên ảnh phủ kín thẻ, hover ảnh chạy sang phải + hiện mô tả. Khách duyệt ngoại lệ R1 cho section này. |
@@ -340,11 +358,12 @@ Mọi thông tin đánh dấu [cần xin khách] / [cần xác nhận] → dùng
 
 | Trang | Khối |
 |---|---|
-| Trang chủ `/vi` | Hero vừa 1 màn hình: nền **gradient loang** tông sáng phủ toàn bộ (kể cả dưới header và dưới ảnh), chữ trái (kicker, tiêu đề, lead, nút báo giá + link sản phẩm, dải 3 thông số), ảnh `hero-banner2.png` bên phải **cao full màn hình, không cắt ảnh** (đúng tỉ lệ gốc, bám mép phải; header và cột chữ được phép đè lên ảnh), hoà nền bằng `mix-blend-multiply`, chỉ mờ góc trên-trái · 5 nhóm sản phẩm: **chồng thẻ 3D chạy theo cuộn** (sticky; trái: số thứ tự + tên + danh mục con; phải: mô tả + nút + chỉ báo vị trí; mobile/giảm chuyển động: danh sách tĩnh) · **carousel logo đối tác 3 hàng** tự cuộn ngang xen kẽ chiều (hàng 1 & 3: phải→trái, hàng 2: trái→phải), thẻ trắng bo góc + bóng mềm, có nút tạm dừng |
+| Trang chủ `/vi` | Hero vừa 1 màn hình: nền **gradient loang** tông sáng phủ toàn bộ (kể cả dưới header và dưới ảnh), chữ trái (kicker, tiêu đề, lead, nút báo giá + link sản phẩm, dải 3 thông số), ảnh `hero-banner3.png` (ảnh chụp nhà xưởng, không tem) chiếm ~56% bên phải, **cao full màn hình, `object-cover`**, mép trái mờ dần vào gradient để cột chữ nằm trên nền sáng (mobile: khối ảnh dưới nội dung, mờ mép trên) · 5 nhóm sản phẩm: **chồng thẻ 3D chạy theo cuộn** (sticky; trái: số thứ tự + tên + danh mục con; phải: mô tả + nút + chỉ báo vị trí; mobile/giảm chuyển động: danh sách tĩnh) · **carousel logo đối tác 3 hàng** tự cuộn ngang xen kẽ chiều (hàng 1 & 3: phải→trái, hàng 2: trái→phải), thẻ trắng bo góc + bóng mềm, có nút tạm dừng |
 | Giới thiệu | Câu chuyện: tiêu đề giữa, trái đoạn trích + ghi chú KUBOKE + nút báo giá, phải **3 ô ảnh dọc** (ô giữa cao hơn; hover/focus: ô to ra + ảnh zoom, ô khác mờ; mỗi ô link tới trang máy) · Quy mô xưởng & điểm mạnh: **chồng thẻ chạy theo cuộn** (sticky; trái: tiêu đề + danh sách 4 điểm mạnh bấm được; phải: thẻ navy ảnh contain + nội dung + nhãn `Chờ khách xác nhận` + nút báo giá; mobile/giảm chuyển động: lưới tĩnh) |
-| Sản phẩm | Sidebar lọc 25% (danh mục 2 cấp, Tất cả/Mới/Đã qua sử dụng, thương hiệu) + lưới 3 cột |
+| Sản phẩm | Theo ảnh mẫu khách gửi (2026-11-06): sidebar lọc 25% **không khung**, các nhóm thu gọn được (tìm kiếm · danh mục dạng chip + nhóm con · tình trạng · thương hiệu), ngăn bằng đường kẻ · cột phải: tiêu đề nhóm đang xem + "Hiển thị N sản phẩm" + **ô Sắp xếp** (mặc định / tên A→Z / Z→A, lưu trên URL `sap-xep`) · lưới 3 cột thẻ theo ảnh mẫu khách gửi 2026-11-09: thẻ trắng bo 14px, ảnh contain trên ô nền xám bo góc (không đè gì lên ảnh, R1), không có nhãn tình trạng/nhóm trên thẻ (khách bỏ 2026-11-09 — tình trạng vẫn lọc được ở sidebar và hiện ở trang chi tiết), tên máy bên trái + hãng/model bên phải (chỗ "giá" trong mẫu — không hiển thị giá, R4), 2 dòng thông số, 1 nút bo tròn "Yêu cầu báo giá" (cam) full chiều ngang; tên & ảnh dẫn tới trang chi tiết |
 | Dịch vụ | 3 mảng dịch vụ (**thẻ ngang giãn khi hover, hiện ảnh**) · **quy trình 4 bước dạng infographic** (≥1024px: nửa vòng tròn tiêu đề bên trái + đường cong nét đứt + 4 thẻ viên thuốc so le theo cung; <1024px: danh sách dọc) · CTA |
 | Dự án / Tin tức | Ảnh thực tế: **carousel 3D cong chạy theo cuộn** (khu vực: chờ xác nhận) · **Video giới thiệu máy móc** (8 video YouTube, lưới 4×2, phát trong hộp thoại ngay trên trang) · logo đối tác · thẻ bài viết `line-clamp-2` |
+| Chi tiết máy | Trái: gallery ảnh · Phải: nhãn + tên + điểm nổi bật + nút báo giá/catalogue + **Thông số kỹ thuật dạng thanh thu gọn** (ảnh mẫu khách gửi 2026-11-06: tiêu đề + dấu +/−, bấm để trượt mở danh sách "Nhãn: giá trị", 300ms, mặc định đóng) + hotline · Sản phẩm cùng danh mục |
 | Liên hệ | 40% thông tin + bản đồ · 60% form 8 trường |
 
 **Sai khác so với bản mô tả (cố ý):** bản mô tả ghi "máy tiện Sheng Shing", nhưng ảnh Sheng Shing trong kho là **máy chà nhám thùng** → dùng đúng theo ảnh. Bộ lọc thương hiệu chỉ hiện hãng có sản phẩm (FERM chưa có ảnh → chưa hiện).

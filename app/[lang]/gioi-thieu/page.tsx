@@ -79,9 +79,8 @@ export default async function AboutPage({ params }: PageProps<'/[lang]/gioi-thie
                 return (
                   <li
                     key={slug}
-                    className={`w-[30%] max-w-[200px] transition-opacity duration-500 group-has-[a:hover]/story:opacity-70 has-[a:hover]:!opacity-100 ${
-                      i === 1 ? 'aspect-[9/16]' : 'aspect-[9/13]'
-                    }`}
+                    className={`w-[30%] max-w-[200px] transition-opacity duration-500 group-has-[a:hover]/story:opacity-70 has-[a:hover]:!opacity-100 ${i === 1 ? 'aspect-[9/16]' : 'aspect-[9/13]'
+                      }`}
                   >
                     <Link
                       href={`/${lang}/san-pham/${p.slug}`}
@@ -105,7 +104,7 @@ export default async function AboutPage({ params }: PageProps<'/[lang]/gioi-thie
       </section>
 
       {/* Quy mô xưởng & điểm mạnh — chồng thẻ chạy theo cuộn (bản tĩnh cho mobile / giảm chuyển động) */}
-      <section className="border-t border-line bg-surface py-14 lg:py-0">
+      <section className="border-t border-line bg-surface py-14 lg:py-16">
         <div className="container-x">
           <StrengthDeck
             header={
@@ -125,7 +124,7 @@ export default async function AboutPage({ params }: PageProps<'/[lang]/gioi-thie
         </div>
       </section>
 
-      <PageQuickJump page="about" lang={lang} dict={dict} />
+      {/* <PageQuickJump page="about" lang={lang} dict={dict} /> */}
     </>
   )
 }

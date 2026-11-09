@@ -77,7 +77,7 @@ export default async function ProjectsPage({ params }: PageProps<'/[lang]/du-an'
         </div>
       </section> */}
 
-      <PageQuickJump page="projects" lang={lang} dict={dict} />
+      {/* <PageQuickJump page="projects" lang={lang} dict={dict} /> */}
     </>
   )
 }

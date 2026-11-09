@@ -72,10 +72,15 @@ function StaticList({ items, labels }: { items: ScrollerItem[]; labels: Labels }
 
 /* ───────────────────────── Sân khấu 3D sticky ───────────────────────── */
 const STEP_VH = 70 // mỗi nhóm chiếm 70vh quãng cuộn
+// Sân khấu cao vừa nội dung (không full màn hình) và dính ở giữa vùng dưới header
+// → không còn khoảng trống lớn giữa tiêu đề section và thẻ đầu tiên.
+const STAGE_H = 'min(calc(100svh - var(--header-h) - 48px), 600px)'
+const STAGE_TOP = `calc(var(--header-h) + (100svh - var(--header-h) - ${STAGE_H}) / 2)`
 
 function Stage({ items, labels }: { items: ScrollerItem[]; labels: Labels }) {
   const n = items.length
   const wrapRef = useRef<HTMLDivElement>(null)
+  const stageRef = useRef<HTMLDivElement>(null)
   const cardRefs = useRef<(HTMLAnchorElement | null)[]>([])
   const [active, setActive] = useState(0)
 
@@ -124,10 +129,11 @@ function Stage({ items, labels }: { items: ScrollerItem[]; labels: Labels }) {
       raf = 0
       const wrap = wrapRef.current
       if (!wrap) return
+      const stage = stageRef.current
       const rect = wrap.getBoundingClientRect()
-      const stickyH = window.innerHeight
-      const total = wrap.offsetHeight - stickyH
-      const t = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0
+      const stickyTop = stage ? parseFloat(getComputedStyle(stage).top) || 0 : 0
+      const total = wrap.offsetHeight - (stage?.offsetHeight ?? window.innerHeight)
+      const t = total > 0 ? Math.min(1, Math.max(0, (stickyTop - rect.top) / total)) : 0
       const p = t * (n - 1)
       apply(p)
       setActive(Math.round(p))
@@ -148,16 +154,18 @@ function Stage({ items, labels }: { items: ScrollerItem[]; labels: Labels }) {
   const goTo = (i: number) => {
     const wrap = wrapRef.current
     if (!wrap) return
-    const total = wrap.offsetHeight - window.innerHeight
-    const top = wrap.getBoundingClientRect().top + window.scrollY
+    const stage = stageRef.current
+    const stickyTop = stage ? parseFloat(getComputedStyle(stage).top) || 0 : 0
+    const total = wrap.offsetHeight - (stage?.offsetHeight ?? window.innerHeight)
+    const top = wrap.getBoundingClientRect().top + window.scrollY - stickyTop
     window.scrollTo({ top: top + (total * i) / (n - 1) + 1, behavior: 'smooth' })
   }
 
   const c = items[active]
 
   return (
-    <div ref={wrapRef} style={{ height: `calc(100svh + ${(n - 1) * STEP_VH}svh)` }} className="relative">
-      <div className="sticky top-0 flex h-svh items-center overflow-hidden pt-(--header-h)">
+    <div ref={wrapRef} style={{ height: `calc(${STAGE_H} + ${(n - 1) * STEP_VH}svh)` }} className="relative">
+      <div ref={stageRef} style={{ top: STAGE_TOP, height: STAGE_H }} className="sticky flex items-center overflow-hidden">
         <div className="container-x grid-12 w-full items-center">
           {/* Cột trái: số thứ tự, tên nhóm, danh mục con */}
           <div className="col-span-3 self-center" aria-live="polite">
@@ -181,7 +189,7 @@ function Stage({ items, labels }: { items: ScrollerItem[]; labels: Labels }) {
           </div>
 
           {/* Giữa: chồng thẻ 3D — thẻ 442px = ảnh gốc 440×330 + viền 1px → hiển thị 1:1, không phóng to */}
-          <div className="relative col-span-6 h-[calc(100svh-var(--header-h)-48px)] [perspective:1200px]">
+          <div style={{ height: STAGE_H }} className="relative col-span-6 [perspective:1200px]">
             {items.map((it, i) => (
               <Link
                 key={it.slug}

@@ -41,9 +41,11 @@ export default function PartnerMarquee({ logos, rows = 3, labels }: Props) {
                 <li
                   key={i}
                   aria-hidden={i >= line.length || undefined}
-                  className="grid size-24 shrink-0 place-items-center rounded-[14px] bg-white p-3 shadow-[0_6px_20px_-10px_rgb(11_42_74/0.22)] lg:size-28"
+                  className="relative size-24 shrink-0 rounded-[14px] bg-white shadow-[0_6px_20px_-10px_rgb(11_42_74/0.22)] lg:size-28"
                 >
-                  <Image src={src} alt="" width={157} height={61} className="h-auto max-h-14 w-full object-contain" unoptimized />
+                  <span className="absolute inset-x-3 inset-y-4 lg:inset-y-6">
+                    <Image src={src} alt="" fill sizes="88px" className="object-contain" unoptimized />
+                  </span>
                 </li>
               ))}
             </ul>

@@ -61,7 +61,7 @@ export default async function NewsPage({ params }: PageProps<'/[lang]/tin-tuc'>)
           </div>
         </div>
       </section>
-      <PageQuickJump page="news" lang={lang} dict={dict} />
+      {/* <PageQuickJump page="news" lang={lang} dict={dict} /> */}
     </>
   )
 }

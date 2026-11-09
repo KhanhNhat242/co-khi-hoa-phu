@@ -108,7 +108,7 @@ export default async function ContactPage({ params }: PageProps<'/[lang]/lien-he
         </div>
       </section>
 
-      <PageQuickJump page="contact" lang={lang} dict={dict} />
+      {/* <PageQuickJump page="contact" lang={lang} dict={dict} /> */}
     </>
   )
 }

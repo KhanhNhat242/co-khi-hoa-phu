@@ -34,7 +34,7 @@ export default async function ProductsPage({ params }: PageProps<'/[lang]/san-ph
         lead={dict.products.lead}
         crumbs={[{ href: `/${lang}`, label: dict.common.home }, { label: dict.nav.products }]}
       />
-      <section className="bg-surface py-12 lg:py-16">
+      <section className="py-12 lg:py-16">
         <div className="container-x">
           {/* Bộ lọc đọc searchParams phía client → bọc Suspense riêng; fallback là bản tĩnh đầy đủ (SEO) */}
           <Suspense fallback={<StaticCatalogue lang={lang} labels={labels} />}>
@@ -42,20 +42,24 @@ export default async function ProductsPage({ params }: PageProps<'/[lang]/san-ph
           </Suspense>
         </div>
       </section>
-      <PageQuickJump page="products" lang={lang} dict={dict} />
+      {/* <PageQuickJump page="products" lang={lang} dict={dict} /> */}
     </>
   )
 }
 
-function StaticCatalogue({ lang, labels }: { lang: Locale; labels: CardLabels & { results: string } }) {
+/** Bản tĩnh đầy đủ nội dung (SEO) trong lúc bộ lọc phía client chưa sẵn sàng — cùng bố cục với ProductExplorer */
+function StaticCatalogue({ lang, labels }: { lang: Locale; labels: CardLabels & { results: string; showing: string; allCategories: string } }) {
   return (
-    <div className="grid-12 gap-y-8">
-      <div className="col-span-4 hidden h-[480px] rounded-sm border border-line bg-white lg:col-span-3 lg:block" aria-hidden />
+    <div className="grid-12 gap-y-6">
+      <div className="col-span-4 hidden lg:col-span-3 lg:block" aria-hidden />
       <div className="col-span-4 md:col-span-12 lg:col-span-9">
-        <p className="mb-6 min-h-11 border-b border-line pb-4 text-[0.9375rem]">
-          <strong className="text-navy tabular-nums">{products.length}</strong> {labels.results}
-        </p>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
+        <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+          <h2 className="text-2xl leading-8 font-bold text-navy lg:text-[1.75rem] lg:leading-9">{labels.allCategories}</h2>
+          <p className="min-h-11 content-center text-[0.9375rem] text-muted">
+            {labels.showing} <strong className="text-navy tabular-nums">{products.length}</strong> {labels.results}
+          </p>
+        </div>
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
           {products.map((p) => {
             const s = findSub(p.category, p.sub)
             return <ProductCard key={p.slug} product={p} lang={lang} categoryName={s ? t(s.name, lang) : ''} labels={labels} />

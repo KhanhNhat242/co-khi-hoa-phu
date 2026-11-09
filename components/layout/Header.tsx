@@ -29,7 +29,7 @@ type Props = {
  * - "solid": nền navy đầy đủ (tên công ty, tìm kiếm, VI/EN, nút báo giá).
  * Chuyển trạng thái có animation ≤ 200ms (màu nền, menu trượt bằng flex-grow, nhóm phải hiện dần).
  */
-export default function Header({ lang, brand, tagline, logo, nav, phone, labels }: Props) {
+export default function Header({ lang, brand, logo, nav, phone, labels }: Props) {
   const pathname = usePathname()
   const isHome = pathname === `/${lang}`
   const [menuOpen, setMenuOpen] = useState(false)
@@ -128,8 +128,11 @@ export default function Header({ lang, brand, tagline, logo, nav, phone, labels 
     >
       <div className="container-x flex h-(--header-h) items-center gap-4">
         <Link href={`/${lang}`} className="flex shrink-0 items-center gap-3" aria-label={brand}>
-          <span className="grid size-12 place-items-center rounded-xs bg-white p-1">
-            <Image src={logo} alt="" width={38} height={39} priority />
+          {/* Ô nền trắng chỉ cần trên header navy (chữ "HOA PHU" màu navy); ở hero nền sáng thì bỏ nền để logo hoà vào gradient */}
+          <span
+            className={`grid size-10 place-items-center rounded-xs p-1 transition-colors duration-200 ease-out ${heroMode ? 'bg-transparent' : 'bg-white'}`}
+          >
+            <Image src={logo} alt="" width={30} height={31} priority />
           </span>
           {/* Tên công ty: thu gọn trong trạng thái hero */}
           <span
@@ -137,7 +140,6 @@ export default function Header({ lang, brand, tagline, logo, nav, phone, labels 
             className={`overflow-hidden leading-tight whitespace-nowrap ${fx} ${heroMode ? 'max-w-0 opacity-0' : 'max-w-[260px] opacity-100'}`}
           >
             <span className="block text-base font-bold tracking-wide uppercase">{brand}</span>
-            <span className={`block text-sm ${heroMode ? 'text-muted' : 'text-white/80'}`}>{tagline}</span>
           </span>
         </Link>
 

@@ -4,14 +4,14 @@ import { IconMessenger, IconPhone, IconZalo } from '@/components/ui/Icons'
 type Props = { labels: { call: string; callShort: string; zalo: string; messenger: string } }
 
 /**
- * Cụm liên hệ nổi (F5) — Flat: ô vuông bo 2px, viền thay shadow.
+ * Cụm liên hệ nổi (F5) — nút tròn, không viền (khách yêu cầu 2026-11-09).
  * Desktop = cột sát mép phải dưới; mobile = thanh ngang dưới đáy (body có padding-bottom).
  */
 export default function FloatingContact({ labels }: Props) {
   const items = [
-    { href: siteConfig.phoneHref, label: labels.call, short: labels.callShort, icon: IconPhone, cls: 'bg-accent text-navy border-accent', ext: false },
-    { href: siteConfig.zalo, label: labels.zalo, short: 'Zalo', icon: IconZalo, cls: 'bg-steel text-white border-white', ext: true },
-    { href: siteConfig.messenger, label: labels.messenger, short: 'Messenger', icon: IconMessenger, cls: 'bg-navy text-white border-white', ext: true },
+    { href: siteConfig.phoneHref, label: labels.call, short: labels.callShort, icon: IconPhone, cls: 'bg-accent text-navy', ext: false },
+    { href: siteConfig.zalo, label: labels.zalo, short: 'Zalo', icon: IconZalo, cls: 'bg-steel text-white', ext: true },
+    { href: siteConfig.messenger, label: labels.messenger, short: 'Messenger', icon: IconMessenger, cls: 'bg-navy text-white', ext: true },
   ]
   return (
     <>
@@ -22,7 +22,7 @@ export default function FloatingContact({ labels }: Props) {
             href={href}
             {...(ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             aria-label={label}
-            className={`group relative grid size-12 place-items-center rounded-xs border-2 transition-transform hover:-translate-x-1 ${cls}`}
+            className={`group relative grid size-12 place-items-center rounded-full transition-transform hover:-translate-x-1 ${cls}`}
           >
             <Icon className="size-6" />
             <span className="pointer-events-none absolute right-full mr-2 rounded-xs bg-navy px-3 py-2 text-sm font-semibold whitespace-nowrap text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">

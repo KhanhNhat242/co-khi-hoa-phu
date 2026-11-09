@@ -59,7 +59,7 @@ export default async function ServicesPage({ params }: PageProps<'/[lang]/dich-v
         </div>
       </section>
 
-      <PageQuickJump page="services" lang={lang} dict={dict} />
+      {/* <PageQuickJump page="services" lang={lang} dict={dict} /> */}
     </>
   )
 }
